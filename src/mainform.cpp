@@ -1,17 +1,6 @@
 #include "mainform.h"
 #include "ui_mainform.h"
-#include "function.h"
 #include "setting.h"
-
-QString This_Month;
-QString Month_Day;
-void Month_Display();
-void Month_Day_Calculator();
-
-int Text_Layout = 90*1.3;
-bool View = false;
-
-TextData mTD;
 
 MainForm::MainForm(QWidget *parent) :
     QMainWindow(parent),
@@ -21,7 +10,6 @@ MainForm::MainForm(QWidget *parent) :
 
     ui->setupUi(this);
     ui->Day->setTextFormat(Qt::RichText);
-
     SettingData setData;
     move(setData.pos_x,setData.pos_y);
     this->setGeometry(this->geometry().x(),
@@ -40,15 +28,10 @@ MainForm::MainForm(QWidget *parent) :
         ui->maintext->setPlainText(temp);
     }
 
-    IMGData mIMG;
     file->setFileName("IMGdata.dll");
     if(file->open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        mIMG.Load();
-        m_img.load(mIMG.LINK);
-        int w = setData.size_w;
-        int h = setData.size_h;
-        ui->label->setPixmap(m_img.scaled(w, h, Qt::KeepAspectRatio));
+        mIMG_LOAD();
         ui->label->setScaledContents(true);
     }
 
@@ -59,7 +42,7 @@ MainForm::MainForm(QWidget *parent) :
     ui->Day->setText(Month_Day);
 }
 
-void Month_Display()
+void MainForm::Month_Display()
 {
     QDate *date = new QDate;
     QDate THIS_MONTH = date->currentDate();
@@ -74,7 +57,7 @@ void Month_Display()
     }
 }
 
-void Month_Day_Calculator()
+void MainForm::Month_Day_Calculator()
 {
     QDate *date = new QDate;
     QDate Today = date->currentDate();
@@ -147,129 +130,7 @@ MainForm::~MainForm()
     delete ui;
 }
 
-void MainForm::on_pushButton_clicked()
-{
-    Setting set(*this,this);
-    set.exec();
-}
-
-void MainForm::on_pushButton_2_clicked()
-{
-    close();
-}
-
-void MainForm::on_pushButton_3_clicked()
-{
-    QPropertyAnimation *Text_Animation = new QPropertyAnimation(ui->maintext,"geometry"); Text_Animation->setDuration(200);
-    QPropertyAnimation *But1_Animation = new QPropertyAnimation(ui->pushButton,"geometry"); But1_Animation->setDuration(200);
-    QPropertyAnimation *But2_Animation = new QPropertyAnimation(ui->pushButton_2,"geometry"); But2_Animation->setDuration(200);
-    QPropertyAnimation *But3_Animation = new QPropertyAnimation(ui->pushButton_3,"geometry"); But3_Animation->setDuration(200);
-
-    if(View == false)
-    {
-        Text_Animation->setStartValue(QRect(ui->maintext->geometry().x(),
-                                            ui->maintext->geometry().y(),
-                                            ui->maintext->geometry().width(),
-                                            ui->maintext->geometry().height()));
-        Text_Animation->setEndValue(QRect(ui->maintext->geometry().x(),
-                                          ui->maintext->geometry().y()-Text_Layout,
-                                          ui->maintext->geometry().width(),
-                                          ui->maintext->geometry().height()));
-        Text_Animation->setEasingCurve(QEasingCurve::BezierSpline);
-
-        But1_Animation->setStartValue(QRect(ui->pushButton->geometry().x(),
-                                            ui->pushButton->geometry().y(),
-                                            ui->pushButton->geometry().width(),
-                                            ui->pushButton->geometry().height()));
-        But1_Animation->setEndValue(QRect(ui->pushButton->geometry().x(),
-                                          ui->pushButton->geometry().y()-Text_Layout,
-                                          ui->pushButton->geometry().width(),
-                                          ui->pushButton->geometry().height()));
-        But1_Animation->setEasingCurve(QEasingCurve::BezierSpline);
-
-        But2_Animation->setStartValue(QRect(ui->pushButton_2->geometry().x(),
-                                            ui->pushButton_2->geometry().y(),
-                                            ui->pushButton_2->geometry().width(),
-                                            ui->pushButton_2->geometry().height()));
-        But2_Animation->setEndValue(QRect(ui->pushButton_2->geometry().x(),
-                                          ui->pushButton_2->geometry().y()-Text_Layout,
-                                          ui->pushButton_2->geometry().width(),
-                                          ui->pushButton_2->geometry().height()));
-        But2_Animation->setEasingCurve(QEasingCurve::BezierSpline);
-
-        But3_Animation->setStartValue(QRect(ui->pushButton_3->geometry().x(),
-                                            ui->pushButton_3->geometry().y(),
-                                            ui->pushButton_3->geometry().width(),
-                                            ui->pushButton_3->geometry().height()));
-        But3_Animation->setEndValue(QRect(ui->pushButton_3->geometry().x(),
-                                          ui->pushButton_3->geometry().y()-Text_Layout,
-                                          ui->pushButton_3->geometry().width(),
-                                          ui->pushButton_3->geometry().height()));
-        But3_Animation->setEasingCurve(QEasingCurve::BezierSpline);
-
-        //ui->pushButton_3->setText((QString)0x025BD);
-
-        Text_Animation->start();
-        But1_Animation->start();
-        But2_Animation->start();
-        But3_Animation->start();
-        View = true;
-    }
-    else
-    {
-        Text_Animation->setStartValue(QRect(ui->maintext->geometry().x(),
-                                            ui->maintext->geometry().y(),
-                                            ui->maintext->geometry().width(),
-                                            ui->maintext->geometry().height()));
-        Text_Animation->setEndValue(QRect(ui->maintext->geometry().x(),
-                                          ui->maintext->geometry().y()+Text_Layout,
-                                          ui->maintext->geometry().width(),
-                                          ui->maintext->geometry().height()));
-        Text_Animation->setEasingCurve(QEasingCurve::BezierSpline);
-
-        But1_Animation->setStartValue(QRect(ui->pushButton->geometry().x(),
-                                            ui->pushButton->geometry().y(),
-                                            ui->pushButton->geometry().width(),
-                                            ui->pushButton->geometry().height()));
-        But1_Animation->setEndValue(QRect(ui->pushButton->geometry().x(),
-                                          ui->pushButton->geometry().y()+Text_Layout,
-                                          ui->pushButton->geometry().width(),
-                                          ui->pushButton->geometry().height()));
-        But1_Animation->setEasingCurve(QEasingCurve::BezierSpline);
-
-        But2_Animation->setStartValue(QRect(ui->pushButton_2->geometry().x(),
-                                            ui->pushButton_2->geometry().y(),
-                                            ui->pushButton_2->geometry().width(),
-                                            ui->pushButton_2->geometry().height()));
-        But2_Animation->setEndValue(QRect(ui->pushButton_2->geometry().x(),
-                                          ui->pushButton_2->geometry().y()+Text_Layout,
-                                          ui->pushButton_2->geometry().width(),
-                                          ui->pushButton_2->geometry().height()));
-        But2_Animation->setEasingCurve(QEasingCurve::BezierSpline);
-
-        But3_Animation->setStartValue(QRect(ui->pushButton_3->geometry().x(),
-                                            ui->pushButton_3->geometry().y(),
-                                            ui->pushButton_3->geometry().width(),
-                                            ui->pushButton_3->geometry().height()));
-        But3_Animation->setEndValue(QRect(ui->pushButton_3->geometry().x(),
-                                          ui->pushButton_3->geometry().y()+Text_Layout,
-                                          ui->pushButton_3->geometry().width(),
-                                          ui->pushButton_3->geometry().height()));
-        But3_Animation->setEasingCurve(QEasingCurve::BezierSpline);
-
-        //ui->pushButton_3->setText((QString)0x025B3);
-
-        Text_Animation->start();
-        But1_Animation->start();
-        But2_Animation->start();
-        But3_Animation->start();
-        View = false;
-    }
-}
-
 /* Move */
-
-bool isMouseDown;
 
 void MainForm::mousePressEvent(QMouseEvent *event) {
    if (event->button() == Qt::LeftButton) {
@@ -303,6 +164,7 @@ void MainForm::resizeEvent(QResizeEvent *event) {
                                  ui->centralWidget->geometry().height()-80,
                                  ui->Month->geometry().width(),
                                  ui->Month->geometry().height()));
+
     if(ui->centralWidget->geometry().width()<600)
     {
         QFont font;
@@ -326,35 +188,35 @@ void MainForm::resizeEvent(QResizeEvent *event) {
                                ui->centralWidget->geometry().width()-80,
                                ui->Day->geometry().height()));
     if(View == false){
-        ui->pushButton_2->setGeometry(QRect(ui->centralWidget->geometry().width()-30,
+        ui->text_btn->setGeometry(QRect(ui->centralWidget->geometry().width()-30,
                                             ui->centralWidget->geometry().height()-40,
-                                            ui->pushButton->geometry().width(),
-                                            ui->pushButton->geometry().height()));
-        ui->pushButton->setGeometry(QRect(ui->centralWidget->geometry().width()-50,
+                                            ui->setting_btn->geometry().width(),
+                                            ui->setting_btn->geometry().height()));
+        ui->setting_btn->setGeometry(QRect(ui->centralWidget->geometry().width()-50,
                                             ui->centralWidget->geometry().height()-40,
-                                            ui->pushButton->geometry().width(),
-                                            ui->pushButton->geometry().height()));
-        ui->pushButton_3->setGeometry(QRect(ui->centralWidget->geometry().width()-70,
+                                            ui->setting_btn->geometry().width(),
+                                            ui->setting_btn->geometry().height()));
+        ui->close_btn->setGeometry(QRect(ui->centralWidget->geometry().width()-70,
                                             ui->centralWidget->geometry().height()-40,
-                                            ui->pushButton->geometry().width(),
-                                            ui->pushButton->geometry().height()));
+                                            ui->setting_btn->geometry().width(),
+                                            ui->setting_btn->geometry().height()));
         ui->maintext->setGeometry(QRect(ui->maintext->geometry().x(),
                                         ui->centralWidget->geometry().height()-20,
                                         ui->centralWidget->geometry().width()-20,
                                         ui->maintext->geometry().height()));}
     else{
-        ui->pushButton_2->setGeometry(QRect(ui->centralWidget->geometry().width()-30,
+        ui->text_btn->setGeometry(QRect(ui->centralWidget->geometry().width()-30,
                                             ui->centralWidget->geometry().height()-40-Text_Layout,
-                                            ui->pushButton->geometry().width(),
-                                            ui->pushButton->geometry().height()));
-        ui->pushButton->setGeometry(QRect(ui->centralWidget->geometry().width()-50,
+                                            ui->setting_btn->geometry().width(),
+                                            ui->setting_btn->geometry().height()));
+        ui->setting_btn->setGeometry(QRect(ui->centralWidget->geometry().width()-50,
                                             ui->centralWidget->geometry().height()-40-Text_Layout,
-                                            ui->pushButton->geometry().width(),
-                                            ui->pushButton->geometry().height()));
-        ui->pushButton_3->setGeometry(QRect(ui->centralWidget->geometry().width()-70,
+                                            ui->setting_btn->geometry().width(),
+                                            ui->setting_btn->geometry().height()));
+        ui->close_btn->setGeometry(QRect(ui->centralWidget->geometry().width()-70,
                                             ui->centralWidget->geometry().height()-40-Text_Layout,
-                                            ui->pushButton->geometry().width(),
-                                            ui->pushButton->geometry().height()));
+                                            ui->setting_btn->geometry().width(),
+                                            ui->setting_btn->geometry().height()));
         ui->maintext->setGeometry(QRect(ui->maintext->geometry().x(),
                                         ui->centralWidget->geometry().height()-20-Text_Layout,
                                         ui->centralWidget->geometry().width()-20,
@@ -366,8 +228,142 @@ void MainForm::resizeEvent(QResizeEvent *event) {
     setData.SAVE();
 }
 
+void MainForm::on_text_btn_clicked()
+{
+    QPropertyAnimation *Text_Animation = new QPropertyAnimation(ui->maintext,"geometry"); Text_Animation->setDuration(200);
+    QPropertyAnimation *But1_Animation = new QPropertyAnimation(ui->setting_btn,"geometry"); But1_Animation->setDuration(200);
+    QPropertyAnimation *But2_Animation = new QPropertyAnimation(ui->text_btn,"geometry"); But2_Animation->setDuration(200);
+    QPropertyAnimation *But3_Animation = new QPropertyAnimation(ui->close_btn,"geometry"); But3_Animation->setDuration(200);
+
+    if(View == false)
+    {
+        Text_Animation->setStartValue(QRect(ui->maintext->geometry().x(),
+                                            ui->maintext->geometry().y(),
+                                            ui->maintext->geometry().width(),
+                                            ui->maintext->geometry().height()));
+        Text_Animation->setEndValue(QRect(ui->maintext->geometry().x(),
+                                          ui->maintext->geometry().y()-Text_Layout,
+                                          ui->maintext->geometry().width(),
+                                          ui->maintext->geometry().height()));
+        Text_Animation->setEasingCurve(QEasingCurve::BezierSpline);
+
+        But1_Animation->setStartValue(QRect(ui->setting_btn->geometry().x(),
+                                            ui->setting_btn->geometry().y(),
+                                            ui->setting_btn->geometry().width(),
+                                            ui->setting_btn->geometry().height()));
+        But1_Animation->setEndValue(QRect(ui->setting_btn->geometry().x(),
+                                          ui->setting_btn->geometry().y()-Text_Layout,
+                                          ui->setting_btn->geometry().width(),
+                                          ui->setting_btn->geometry().height()));
+        But1_Animation->setEasingCurve(QEasingCurve::BezierSpline);
+
+        But2_Animation->setStartValue(QRect(ui->text_btn->geometry().x(),
+                                            ui->text_btn->geometry().y(),
+                                            ui->text_btn->geometry().width(),
+                                            ui->text_btn->geometry().height()));
+        But2_Animation->setEndValue(QRect(ui->text_btn->geometry().x(),
+                                          ui->text_btn->geometry().y()-Text_Layout,
+                                          ui->text_btn->geometry().width(),
+                                          ui->text_btn->geometry().height()));
+        But2_Animation->setEasingCurve(QEasingCurve::BezierSpline);
+
+        But3_Animation->setStartValue(QRect(ui->close_btn->geometry().x(),
+                                            ui->close_btn->geometry().y(),
+                                            ui->close_btn->geometry().width(),
+                                            ui->close_btn->geometry().height()));
+        But3_Animation->setEndValue(QRect(ui->close_btn->geometry().x(),
+                                          ui->close_btn->geometry().y()-Text_Layout,
+                                          ui->close_btn->geometry().width(),
+                                          ui->close_btn->geometry().height()));
+        But3_Animation->setEasingCurve(QEasingCurve::BezierSpline);
+
+        //ui->close_btn->setText((QString)0x025BD);
+
+        Text_Animation->start();
+        But1_Animation->start();
+        But2_Animation->start();
+        But3_Animation->start();
+        View = true;
+    }
+    else
+    {
+        Text_Animation->setStartValue(QRect(ui->maintext->geometry().x(),
+                                            ui->maintext->geometry().y(),
+                                            ui->maintext->geometry().width(),
+                                            ui->maintext->geometry().height()));
+        Text_Animation->setEndValue(QRect(ui->maintext->geometry().x(),
+                                          ui->maintext->geometry().y()+Text_Layout,
+                                          ui->maintext->geometry().width(),
+                                          ui->maintext->geometry().height()));
+        Text_Animation->setEasingCurve(QEasingCurve::BezierSpline);
+
+        But1_Animation->setStartValue(QRect(ui->setting_btn->geometry().x(),
+                                            ui->setting_btn->geometry().y(),
+                                            ui->setting_btn->geometry().width(),
+                                            ui->setting_btn->geometry().height()));
+        But1_Animation->setEndValue(QRect(ui->setting_btn->geometry().x(),
+                                          ui->setting_btn->geometry().y()+Text_Layout,
+                                          ui->setting_btn->geometry().width(),
+                                          ui->setting_btn->geometry().height()));
+        But1_Animation->setEasingCurve(QEasingCurve::BezierSpline);
+
+        But2_Animation->setStartValue(QRect(ui->text_btn->geometry().x(),
+                                            ui->text_btn->geometry().y(),
+                                            ui->text_btn->geometry().width(),
+                                            ui->text_btn->geometry().height()));
+        But2_Animation->setEndValue(QRect(ui->text_btn->geometry().x(),
+                                          ui->text_btn->geometry().y()+Text_Layout,
+                                          ui->text_btn->geometry().width(),
+                                          ui->text_btn->geometry().height()));
+        But2_Animation->setEasingCurve(QEasingCurve::BezierSpline);
+
+        But3_Animation->setStartValue(QRect(ui->close_btn->geometry().x(),
+                                            ui->close_btn->geometry().y(),
+                                            ui->close_btn->geometry().width(),
+                                            ui->close_btn->geometry().height()));
+        But3_Animation->setEndValue(QRect(ui->close_btn->geometry().x(),
+                                          ui->close_btn->geometry().y()+Text_Layout,
+                                          ui->close_btn->geometry().width(),
+                                          ui->close_btn->geometry().height()));
+        But3_Animation->setEasingCurve(QEasingCurve::BezierSpline);
+
+        //ui->close_btn->setText((QString)0x025B3);
+
+        Text_Animation->start();
+        But1_Animation->start();
+        But2_Animation->start();
+        But3_Animation->start();
+        View = false;
+    }
+}
+
 void MainForm::on_maintext_textChanged()
 {
     mTD.Text_Data=ui->maintext->toPlainText();
     mTD.SAVE();
+}
+
+void MainForm::on_setting_btn_clicked()
+{
+    Setting set(*this,this);
+    set.exec();
+}
+
+void MainForm::on_close_btn_clicked()
+{
+    close();
+}
+
+void MainForm::mIMG_LOAD() {
+    IMGData mIMG;
+    mIMG.LOAD();
+
+    if(mIMG.LINK.contains(".gif")) {
+        movie = new QMovie(mIMG.LINK);
+        ui->label->setMovie(movie);
+        movie->start();
+    }
+    else {
+        ui->label->setPixmap(mIMG.LINK);
+    }
 }

@@ -44,8 +44,9 @@ public:
         out.setCodec("UTF-8");
         out << LINK;
         file->close();
+        delete file;
     }
-    void Load()
+    void LOAD()
     {
         QFile *file = new QFile;
         file->setFileName("IMGdata.dll");
@@ -54,6 +55,7 @@ public:
         in.setCodec("UTF-8");
         LINK = in.readAll();
         file->close();
+        delete file;
     }
 };
 

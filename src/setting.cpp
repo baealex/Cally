@@ -3,17 +3,16 @@
 #include "ui_mainform.h"
 #include <QDesktopServices>
 
-bool AutoStart = false;
-
 Setting::Setting(MainForm &ref, QWidget *parent) :
     QDialog(parent),
     Mainref(ref),
     ui(new Ui::Setting)
 {
+
     ui->setupUi(this);
 
     SettingData setData;
-    ui->horizontalSlider->setValue(setData.Opacity);
+    ui->opacity_bar->setValue(setData.Opacity);
     if(setData.Auto_Start==1)
     {
         ui->AutoStartCheck->setChecked(true);
@@ -23,25 +22,6 @@ Setting::Setting(MainForm &ref, QWidget *parent) :
 Setting::~Setting()
 {
     delete ui;
-}
-
-void Setting::on_pushButton_3_clicked()
-{
-    m_fileName = QFileDialog::getOpenFileName(this, "Get Any File");
-    m_img.load(m_fileName);
-    int w = Mainref.ui->label->width();
-    int h = Mainref.ui->label->height();
-    Mainref.ui->label->setPixmap(m_img.scaled(w, h, Qt::KeepAspectRatio));
-    Mainref.ui->label->setScaledContents(true);
-
-    IMGData mIMG;
-    mIMG.LINK = m_fileName;
-    mIMG.SAVE();
-}
-
-void Setting::on_pushButton_clicked()
-{
-    QDesktopServices::openUrl(QUrl("http://baealex.tistory.com"));
 }
 
 void Setting::on_AutoStartCheck_stateChanged(int arg1)
@@ -72,11 +52,50 @@ void Setting::on_AutoStartCheck_stateChanged(int arg1)
     }
 }
 
-void Setting::on_horizontalSlider_valueChanged(int value)
+void Setting::on_opacity_bar_valueChanged(int value)
 {
     Mainref.setWindowOpacity((double)value/100);
 
     SettingData setData;
     setData.Opacity = value;
     setData.SAVE();
+}
+
+void Setting::on_picture_btn_clicked()
+{
+    m_fileName = QFileDialog::getOpenFileName(this, "Select IMG File.", "", tr("Image (*.jpg *.jpeg *.jpe *.png *pns) ;; GIFs(*.gif)"));
+
+    IMGData mIMG;
+    mIMG.LINK = m_fileName;
+    mIMG.SAVE();
+
+    Mainref.mIMG_LOAD();
+}
+
+void Setting::on_homepage_btn_clicked()
+{
+    QDesktopServices::openUrl(QUrl("http://baealex.tistory.com"));
+}
+
+void Setting::on_pushButton_clicked()
+{
+    close();
+}
+
+void Setting::mousePressEvent(QMouseEvent *event) {
+   if (event->button() == Qt::LeftButton && event->localPos().y() >= 0 && event->localPos().y() <= 30) {
+      m_nMouseClick_X_Coordinate = event->x();
+      m_nMouseClick_Y_Coordinate = event->y();
+      isMouseDown = true;
+   }
+}
+
+void Setting::mouseReleaseEvent(QMouseEvent *event) {
+   isMouseDown = false;
+}
+
+void Setting::mouseMoveEvent(QMouseEvent *event) {
+   if (isMouseDown == true) {
+      move(event->globalX()-m_nMouseClick_X_Coordinate,event->globalY()-m_nMouseClick_Y_Coordinate);
+   }
 }

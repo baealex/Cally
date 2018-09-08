@@ -18,16 +18,29 @@ public:
     ~Setting();
 
 private slots:
-    void on_pushButton_3_clicked();
-    void on_pushButton_clicked();
     void on_AutoStartCheck_stateChanged(int arg1);
-    void on_horizontalSlider_valueChanged(int value);
+
+    void on_picture_btn_clicked();
+
+    void on_homepage_btn_clicked();
+
+    void on_opacity_bar_valueChanged(int value);
+
+    void on_pushButton_clicked();
 
 private:
     Ui::Setting *ui;
     MainForm &Mainref;
     QString m_fileName;
-    QPixmap m_img;
+    bool AutoStart = false;
+    bool isMouseDown;
+
+protected:
+   void mousePressEvent(QMouseEvent * event);
+   void mouseReleaseEvent(QMouseEvent * event);
+   void mouseMoveEvent(QMouseEvent * event);
+   int m_nMouseClick_X_Coordinate;
+   int m_nMouseClick_Y_Coordinate;
 };
 
 #endif // SETTING_H

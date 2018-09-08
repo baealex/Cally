@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>260</width>
-    <height>230</height>
+    <height>310</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,7 +22,7 @@
   <property name="maximumSize">
    <size>
     <width>260</width>
-    <height>230</height>
+    <height>310</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,17 @@
     <normaloff>:/new/Icon/if__settings_80981.png</normaloff>:/new/Icon/if__settings_80981.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background : white;</string>
+   <string notr="true">QDialog {
+background-color: #25253f;
+}
+QPushButton {
+background: #7b84f7;
+color: #25253;
+font-weight:bold;
+}
+QCheckBox {
+color:#fff;
+}</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -45,7 +55,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>140</y>
+     <y>220</y>
      <width>241</width>
      <height>80</height>
     </rect>
@@ -72,11 +82,11 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QSlider" name="horizontalSlider">
+  <widget class="QSlider" name="opacity_bar">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
+     <y>20</y>
      <width>141</width>
      <height>22</height>
     </rect>
@@ -101,7 +111,7 @@
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>10</y>
+     <y>20</y>
      <width>91</width>
      <height>21</height>
     </rect>
@@ -119,58 +129,52 @@
     <string>AutoStart</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="homepage_btn">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>90</y>
-     <width>161</width>
+     <x>60</x>
+     <y>160</y>
+     <width>141</width>
      <height>31</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton {
-     background-color: #FFBB00;
-	border: 1px solid black;
-     border-radius: 10px;
-	color: #FFF
-}</string>
+    <string notr="true"/>
    </property>
    <property name="text">
-    <string>SKYLINE Homepage</string>
+    <string>홈페이지</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="picture_btn">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>50</y>
-     <width>161</width>
+     <x>60</x>
+     <y>60</y>
+     <width>141</width>
      <height>31</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton {
-     background-color: #FFBB00;
-	border: 1px solid black;
-     border-radius: 10px;
-	color: #FFF
-}</string>
+    <string notr="true"/>
    </property>
    <property name="text">
-    <string>Picture Change</string>
+    <string>사진 선택</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="update_btn">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>110</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>업데이트</string>
    </property>
   </widget>
  </widget>
