@@ -28,6 +28,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_update_btn_clicked();
+
 private:
     Ui::Setting *ui;
     MainForm &Mainref;

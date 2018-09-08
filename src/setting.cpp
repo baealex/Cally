@@ -8,7 +8,7 @@ Setting::Setting(MainForm &ref, QWidget *parent) :
     Mainref(ref),
     ui(new Ui::Setting)
 {
-
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     ui->setupUi(this);
 
     SettingData setData;
@@ -75,6 +75,11 @@ void Setting::on_picture_btn_clicked()
 void Setting::on_homepage_btn_clicked()
 {
     QDesktopServices::openUrl(QUrl("http://baealex.tistory.com"));
+}
+
+void Setting::on_update_btn_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://www.dropbox.com/s/262nvtsmdo5t91d/IUCalendar.exe?dl=1"));
 }
 
 void Setting::on_pushButton_clicked()
