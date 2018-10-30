@@ -1,7 +1,11 @@
 # 연예인 달력 프로그램
 > 원하는 사진을 삽입하여 사용할 수 있는 달력 프로그램.
 
-<img src="https://user-images.githubusercontent.com/35596687/42124776-e587c496-7ca3-11e8-9a06-2c000447da4f.png" width="300px" height="auto" style="display:block; margin:0 auto;"/>
+<br/>
+
+<p stlye="text-align:center;"><img src="https://user-images.githubusercontent.com/35596687/42124776-e587c496-7ca3-11e8-9a06-2c000447da4f.png" width="300px" height="auto" style="display:block; margin:0 auto;"/></p>
+
+<br/>
 
 오프라인에서 판매되는 제작형 달력에서 영감을 얻어 제작한 프로그램. 원하는 사진을 첨부할 수 있고 자동적으로 해당 월의 달력이 출력된다. 디자인의 난관에 부딪혀 제작이 중단되었다. 간단한 메모 기능도 포함되었다.
 
@@ -9,11 +13,11 @@
 
 Windows x64 :
 
-[IUCalendar.zip](https://www.dropbox.com/sh/acxa647t1bazap6/AAAv0A-GPzLyeaotKFCuM7tHa?dl=1) / [Visual C++ 재배포 패키지](https://www.microsoft.com/ko-kr/download/details.aspx?id=48145)
+[IUCalendar_x64.zip](https://www.dropbox.com/sh/acxa647t1bazap6/AAAv0A-GPzLyeaotKFCuM7tHa?dl=1)
 
-## 사용 예제
+## 상세 설명
 
-_더 많은 예제와 사용법은 [원문](http://baealex.tistory.com/115)를 참고하세요._
+_더 자세한 설명은 [프로젝트 페이지](https://baealex.github.io/Page/Project)를 참고하세요._
 
 ## 업데이트 내역
 
