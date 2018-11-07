@@ -1,12 +1,6 @@
 # 연예인 달력 프로그램
 > 원하는 사진을 삽입하여 사용할 수 있는 달력 프로그램.
 
-<br/>
-
-<p stlye="text-align:center;"><img src="https://user-images.githubusercontent.com/35596687/42124776-e587c496-7ca3-11e8-9a06-2c000447da4f.png" width="300px" height="auto" style="display:block; margin:0 auto;"/></p>
-
-<br/>
-
 오프라인에서 판매되는 제작형 달력에서 영감을 얻어 제작한 프로그램. 원하는 사진을 첨부할 수 있고 자동적으로 해당 월의 달력이 출력된다. 디자인의 난관에 부딪혀 제작이 중단되었다. 간단한 메모 기능도 포함되었다.
 
 ## 설치 방법
