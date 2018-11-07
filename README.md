@@ -17,7 +17,45 @@ Windows x64 :
 
 ## 상세 설명
 
-_더 자세한 설명은 [프로젝트 페이지](https://baealex.github.io/Page/Project)를 참고하세요._
+![1](https://user-images.githubusercontent.com/35596687/48127322-c87f7b80-e2c6-11e8-9306-407f248eb00f.png)
+
+프로그램의 기본 레이아웃입니다.
+
+한줄의 메모는 드러납니다.
+
+<br/>
+
+![2](https://user-images.githubusercontent.com/35596687/48127323-c87f7b80-e2c6-11e8-95d2-ed7d26bcea40.png)
+
+프로그램의 메모 기능입니다.
+
+<br/>
+
+![3](https://user-images.githubusercontent.com/35596687/48127326-c87f7b80-e2c6-11e8-8af2-8af047ce4764.png)
+
+투명도 조절 슬라이드와 이미지 변경 버튼입니다.
+
+<br/>
+
+<hr/>
+
+<br/>
+
+![4](https://user-images.githubusercontent.com/35596687/48127327-c9181200-e2c6-11e8-9b4a-924b5993eb28.png)
+
+9.09 업데이트 후 촌스러운 회색빛을 탈피했습니다.
+
+<br/>
+
+![5](https://user-images.githubusercontent.com/35596687/48127328-c9181200-e2c6-11e8-9d36-075d9ac8219c.png)
+
+설정창의 테마도 메인 윈도우와 유사합니다.
+
+<br/>
+
+![6](https://user-images.githubusercontent.com/35596687/48127329-c9181200-e2c6-11e8-860d-aecbcc1f4c05.gif)
+
+가장 큰 변화는 움짤이 지원됩니다.
 
 ## 업데이트 내역
 
