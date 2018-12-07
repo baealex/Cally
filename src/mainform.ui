@@ -29,17 +29,7 @@
     <normaloff>:/new/Icon/if_calendar-alt_285665.png</normaloff>:/new/Icon/if_calendar-alt_285665.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton {
-background-color: white;
-color: black;
-border-radius: 0px;
-}
-QMainWindow {
-background-color: #25253f;
-}
-QStatusBar {
-background-color: #32324c;
-}</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="label">

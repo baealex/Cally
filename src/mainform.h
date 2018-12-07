@@ -26,6 +26,7 @@ public:
     void Month_Display();
     void Month_Day_Calculator();
     void mIMG_LOAD();
+    void ThemeSelect(int arg1);
 
 private slots:
     void on_maintext_textChanged();

@@ -8,7 +8,9 @@ Setting::Setting(MainForm &ref, QWidget *parent) :
     Mainref(ref),
     ui(new Ui::Setting)
 {
-    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+    setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     ui->setupUi(this);
 
     SettingData setData;

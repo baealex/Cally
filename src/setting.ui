@@ -32,19 +32,6 @@
    <iconset resource="icon.qrc">
     <normaloff>:/new/Icon/if__settings_80981.png</normaloff>:/new/Icon/if__settings_80981.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QDialog {
-background-color: #25253f;
-}
-QPushButton {
-background: #7b84f7;
-color: #25253;
-font-weight:bold;
-}
-QCheckBox {
-color:#fff;
-}</string>
-  </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
   </property>
