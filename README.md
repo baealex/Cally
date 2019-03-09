@@ -54,4 +54,4 @@ SkyNote2를 만든 직후 이어서 만들어 본 프로그램이라 SkyNote2가
     
 ## 정보
 
-Jino Bae. – [BLOG](http://baealex.tistory.com) – bae_alex@naver.com
+Jino Bae. – [BLOG](https://www.blex.kr) – bae_alex@naver.com
