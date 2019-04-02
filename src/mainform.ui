@@ -29,7 +29,35 @@
     <normaloff>:/new/Icon/if_calendar-alt_285665.png</normaloff>:/new/Icon/if_calendar-alt_285665.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QMainWindow { background:#444; }
+QMessageBox { background:#444; }
+QMessageBox QLabel { color: #fff; }
+QDialog { background: #333; }
+QDialog QLabel{ color:#fff; }
+QDialog QCheckBox{ color:#fff; }
+QSlider::handle:horizontal { background: #fff; border: 1px solid #5c5c5c; width: 18px; margin: -2px 0; border-radius: 3px; }
+QMenuBar { background:#444; color:#fff; }
+QMenuBar::item:selected { background: #555; }
+QMenuBar::item:pressed { background: #777; }
+QMenu { color: #fff; background-color: #333; border: 1px solid black; }
+QMenu::item { background-color: transparent; }
+QMenu::item:selected { background-color: #555; }
+QGraphicsView { background:#222; border:0px; }
+QSpinBox { background:#222; color:#fff; }
+QSpinBox::down-button { subcontrol-origin: border; }
+QPushButton { background:rgba(255,255,255,.95); color:#777; font-weight:bold; text-align:center; border: none; }
+QPushButton:hover { color:#555; }
+QPushButton:pressed { color:#111; }
+QPushButton:checked { color:#fff; }
+QScrollBar:horizontal { border: 0px solid grey; background: #333; height: 15px; margin: 0px 22px 0 22px; } QScrollBar::handle:horizontal { background: #666; min-width: 20px; }
+QScrollBar::add-line:horizontal { border: 0px solid grey; background: #555; width: 20px; subcontrol-position: right; subcontrol-origin: margin; }
+QScrollBar::sub-line:horizontal { border: 0px solid grey; background: #555; width: 20px; subcontrol-position: left; subcontrol-origin: margin; }
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal { background: none; }
+QScrollBar:vertical { border: 0px solid grey; background: #333; width: 15px; margin: 22px 0 22px 0; }
+QScrollBar::handle:vertical { background: #666; min-height: 20px; }
+QScrollBar::add-line:vertical { border: 0px solid grey; background: #555; height: 20px; subcontrol-position: bottom; subcontrol-origin: margin; }
+QScrollBar::sub-line:vertical { border: 0px solid grey; background: #555; height: 20px; subcontrol-position: top; subcontrol-origin: margin; }
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: none; }</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="label">

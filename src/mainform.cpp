@@ -28,8 +28,6 @@ MainForm::MainForm(QWidget *parent) :
         ui->maintext->setPlainText(temp);
     }
 
-    this->setStyleSheet("QMainWindow { background:#444; } QMessageBox { background:#444; } QMessageBox QLabel { color: #fff; } QDialog { background: #333; } QDialog QLabel{ color:#fff; } QDialog QCheckBox{ color:#fff; } QSlider::handle:horizontal { background: #fff; border: 1px solid #5c5c5c; width: 18px; margin: -2px 0; border-radius: 3px; } QMenuBar { background:#444; color:#fff; } QMenuBar::item:selected { background: #555; } QMenuBar::item:pressed { background: #777; } QMenu { color: #fff; background-color: #333; border: 1px solid black; } QMenu::item { background-color: transparent; } QMenu::item:selected { background-color: #555; } QGraphicsView { background:#222; border:0px; } QSpinBox { background:#222; color:#fff; } QSpinBox::down-button { subcontrol-origin: border; } QPushButton { background:rgba(255,255,255,.4); color:#fff; font-weight:bold; text-align:center; } QPushButton:hover { color:#ccc; } QPushButton:pressed { color:#fff; } QPushButton:checked { color:#fff; } QScrollBar:horizontal { border: 0px solid grey; background: #333; height: 15px; margin: 0px 22px 0 22px; } QScrollBar::handle:horizontal { background: #666; min-width: 20px; } QScrollBar::add-line:horizontal { border: 0px solid grey; background: #555; width: 20px; subcontrol-position: right; subcontrol-origin: margin; } QScrollBar::sub-line:horizontal { border: 0px solid grey; background: #555; width: 20px; subcontrol-position: left; subcontrol-origin: margin; } QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal { background: none; } QScrollBar:vertical { border: 0px solid grey; background: #333; width: 15px; margin: 22px 0 22px 0; } QScrollBar::handle:vertical { background: #666; min-height: 20px; } QScrollBar::add-line:vertical { border: 0px solid grey; background: #555; height: 20px; subcontrol-position: bottom; subcontrol-origin: margin; } QScrollBar::sub-line:vertical { border: 0px solid grey; background: #555; height: 20px; subcontrol-position: top; subcontrol-origin: margin; } QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: none; }");
-
     file->setFileName("IMGdata.dll");
     if(file->open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -128,6 +126,10 @@ void MainForm::Month_Day_Calculator()
 
 MainForm::~MainForm()
 {
+    SettingData setData;
+    setData.size_w = this->size().width();
+    setData.size_h = this->size().height();
+    setData.SAVE();
     delete ui;
 }
 
@@ -156,7 +158,6 @@ void MainForm::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void MainForm::resizeEvent(QResizeEvent *event) {
-    QMainWindow::resizeEvent(event);
     ui->label->setGeometry(QRect(ui->label->geometry().x(),
                                  ui->label->geometry().y(),
                                  ui->centralWidget->geometry().width(),
@@ -168,19 +169,16 @@ void MainForm::resizeEvent(QResizeEvent *event) {
 
     if(ui->centralWidget->geometry().width()<600)
     {
-        QFont font;
         font.setPixelSize(12);
         ui->Day->setFont(font);
     }
     else if(ui->centralWidget->geometry().width()>=600 && ui->centralWidget->geometry().width()<700)
     {
-        QFont font;
         font.setPixelSize(13);
         ui->Day->setFont(font);
     }
     else if(ui->centralWidget->geometry().width()>=700)
     {
-        QFont font;
         font.setPixelSize(14);
         ui->Day->setFont(font);
     }
@@ -222,11 +220,6 @@ void MainForm::resizeEvent(QResizeEvent *event) {
                                         ui->centralWidget->geometry().height()-20-Text_Layout,
                                         ui->centralWidget->geometry().width()-20,
                                         ui->maintext->geometry().height()));}
-
-    SettingData setData;
-    setData.size_w = this->size().width();
-    setData.size_h = this->size().height();
-    setData.SAVE();
 }
 
 void MainForm::on_text_btn_clicked()

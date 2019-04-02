@@ -76,7 +76,7 @@ void Setting::on_picture_btn_clicked()
 
 void Setting::on_homepage_btn_clicked()
 {
-    QDesktopServices::openUrl(QUrl("http://baealex.tistory.com"));
+    QDesktopServices::openUrl(QUrl("https://baejino.com"));
 }
 
 void Setting::on_update_btn_clicked()

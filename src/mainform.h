@@ -39,6 +39,7 @@ private:
     QMovie *movie;
     QString This_Month;
     QString Month_Day;
+    QFont font;
     int Text_Layout = 90*1.3;
     bool View = false;
     bool isMouseDown;

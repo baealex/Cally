@@ -74,7 +74,7 @@
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>141</width>
+     <width>151</width>
      <height>22</height>
     </rect>
    </property>
@@ -97,9 +97,9 @@
   <widget class="QCheckBox" name="AutoStartCheck">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>170</x>
      <y>20</y>
-     <width>91</width>
+     <width>81</width>
      <height>21</height>
     </rect>
    </property>
@@ -119,49 +119,49 @@
   <widget class="QPushButton" name="homepage_btn">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>70</x>
      <y>160</y>
-     <width>141</width>
-     <height>31</height>
+     <width>161</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true"/>
    </property>
    <property name="text">
-    <string>홈페이지</string>
+    <string>Creator Blog</string>
    </property>
   </widget>
   <widget class="QPushButton" name="picture_btn">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>30</x>
      <y>60</y>
-     <width>141</width>
-     <height>31</height>
+     <width>161</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true"/>
    </property>
    <property name="text">
-    <string>사진 선택</string>
+    <string>Picture Select</string>
    </property>
   </widget>
   <widget class="QPushButton" name="update_btn">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>50</x>
      <y>110</y>
-     <width>141</width>
-     <height>31</height>
+     <width>161</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true"/>
    </property>
    <property name="text">
-    <string>업데이트</string>
+    <string>Program Update</string>
    </property>
   </widget>
  </widget>
