@@ -15,19 +15,13 @@ Windows 7+ x64 : [IUCalendar_x64.zip](https://www.dropbox.com/sh/acxa647t1bazap6
 
 시중에 제작형 달력(자신이 원하는 이미지를 추가한 달력)도 많이 나오고 있었고, 유사한 기능을 하는 프로그램을 들어본 적이 없어서 직접 만들어 보았습니다. 다만, 제작자의 디자인 능력이 다소 허접하다는 문제가 있었죠.
 
-![1](https://user-images.githubusercontent.com/35596687/48127322-c87f7b80-e2c6-11e8-9306-407f248eb00f.png)
-
 처음 제작은 2018년 2월에 실행하였고, Qt에 대한 지식이 많이 부족해 디자인이 더더욱 허접했습니다. 언젠가 꼭 뜯어 고쳐야 할 일이죠.
 
 <br/>
 
-![2](https://user-images.githubusercontent.com/35596687/48127323-c87f7b80-e2c6-11e8-95d2-ed7d26bcea40.png)
-
 SkyNote2를 만든 직후 이어서 만들어 본 프로그램이라 SkyNote2가 가지고 있던 훌륭한(?) 메모 기능을 탑재하고 있습니다. 메모창은 애니메이션으로 자연스럽게 움직이며, 한 줄의 메모는 드러납니다.
 
 <br/>
-
-![6](https://user-images.githubusercontent.com/35596687/48127329-c9181200-e2c6-11e8-860d-aecbcc1f4c05.gif)
 
 2018년 9월 9일. 이미지 뷰어를 제작하면서 움직이는 짤방을 지원하는 방법을 깨닫고 캘린더에도 즉시 적용하였습니다.
 
