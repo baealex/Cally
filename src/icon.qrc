@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/new/Icon">
-        <file>if__close_80945.png</file>
-        <file>if__edit_page_80952.png</file>
-        <file>if__settings_80981.png</file>
-        <file>if_calendar-alt_285665.png</file>
-        <file>KABAN.png</file>
-    </qresource>
-</RCC>
