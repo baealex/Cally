@@ -45,6 +45,8 @@ interface CalendarProp {
     month: number
     defaultColor: string
     pointColor: string
+    backgroundColor: string
+    backgroundOpacity: string
     onDateClick: (date: number) => void
     onDateChange: (year: number, month: number) => void
 }
@@ -54,6 +56,8 @@ export const Calendar = ({
     month,
     defaultColor,
     pointColor,
+    backgroundColor,
+    backgroundOpacity,
     onDateClick,
     onDateChange
 }: CalendarProp) => {
@@ -83,13 +87,13 @@ export const Calendar = ({
             <div className="calendar">
                 <div className="calendar-header">
                         <button className="calendar-header-button-previous" onClick={handleClickPrevious}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4l-8 8 8 8"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 4l-8 8 8 8"/></svg>
                         </button>
                         <div className="calendar-header-center">
                             <h2>{year} / {month + 1}</h2>
                         </div>
                         <button className="calendar-header-button-next" onClick={handleClickNext}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4l8 8-8 8"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 4l8 8-8 8"/></svg>
                         </button>
                 </div>
                 <div className="calendar-body">
@@ -113,11 +117,24 @@ export const Calendar = ({
             </div>
             <style jsx>{`
                 .calendar {
-                    border-radius: 10px;
+                    position: relative;
                     display: flex;
                     flex-direction: column;
                     color: ${defaultColor};
                     user-select: none;
+                }
+                
+                .calendar::before {
+                    content: '';
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    z-index: -1;
+                    top: 0;
+                    left: 0;
+                    background-color: ${backgroundColor};
+                    opacity: ${backgroundOpacity};
+                    border-radius: 10px;
                 }
 
                 .point {
@@ -204,7 +221,7 @@ export const Calendar = ({
                     grid-template-rows: repeat(5, 1fr);
                     grid-row-gap: 8px;
                     grid-column-gap: 16px;
-                    padding: 0 20px;
+                    padding: 0 20px 20px;
                 }
 
                 .calendar-body-body-day {
@@ -246,7 +263,7 @@ export const Calendar = ({
                 .calendar-body-body-day:active {
                     background-color: #e6e6e6;
                 }
-                
+
                 .calendar-body-body-day:focus {
                     outline: none;
                 }
