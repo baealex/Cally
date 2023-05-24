@@ -43,6 +43,8 @@ const WEEK = [
 interface CalendarProp {
     year: number
     month: number
+    defaultColor: string
+    pointColor: string
     onDateClick: (date: number) => void
     onDateChange: (year: number, month: number) => void
 }
@@ -50,6 +52,8 @@ interface CalendarProp {
 export const Calendar = ({
     year,
     month,
+    defaultColor,
+    pointColor,
     onDateClick,
     onDateChange
 }: CalendarProp) => {
@@ -112,9 +116,14 @@ export const Calendar = ({
                     border-radius: 10px;
                     display: flex;
                     flex-direction: column;
-                    color:#543;
+                    color: ${defaultColor};
                     user-select: none;
                 }
+
+                .point {
+                    color: ${pointColor};
+                }
+
                 .calendar-header {
                     width: 100%;
                     height: 10%;
@@ -123,12 +132,14 @@ export const Calendar = ({
                     align-items: center;
                     padding: 0 20px;
                 }
+
                 .calendar-body {
                     width: 100%;
                     height: 90%;
                     display: flex;
                     flex-direction: column;
                 }
+
                 .calendar-body-header {
                     width: 100%;
                     height: 10%;
@@ -137,6 +148,7 @@ export const Calendar = ({
                     align-items: center;
                     padding: 0 20px;
                 }
+
                 .calendar-body-header-day {
                     width: 40px;
                     height: 40px;
@@ -144,6 +156,7 @@ export const Calendar = ({
                     justify-content: center;
                     align-items: center;
                 }
+
                 .calendar-header-button-previous,
                 .calendar-header-button-next {
                     width: 30px;
@@ -153,19 +166,23 @@ export const Calendar = ({
                     cursor: pointer;
                     color: inherit;
                 }
+
                 .calendar-header-button-previous svg,
                 .calendar-header-button-next svg {
                     width: 100%;
                     height: 100%;
                 }
+
                 .calendar-header-button-previous:hover,
                 .calendar-header-button-next:hover {
                     opacity: 0.5;
                 }
+
                 .calendar-header-button-previous:active,
                 .calendar-header-button-next:active {
                     opacity: 0.8;
                 }
+
                 .calendar-header-center {
                     width: 100%;
                     height: 100%;
@@ -173,10 +190,12 @@ export const Calendar = ({
                     justify-content: center;
                     align-items: center;
                 }
+
                 .calendar-body-header-day h3 {
                     font-size: 1.2rem;
                     font-weight: 500;
                 }
+
                 .calendar-body-body {
                     width: 100%;
                     height: 90%;
@@ -187,6 +206,7 @@ export const Calendar = ({
                     grid-column-gap: 16px;
                     padding: 0 20px;
                 }
+
                 .calendar-body-body-day {
                     width: 40px;
                     height: 40px;
@@ -196,34 +216,39 @@ export const Calendar = ({
                     border-radius: 10px;
                     cursor: pointer;
                 }
+
                 .calendar-body-body-day:hover {
                     background-color: #f2f2f2;
                 }
+
                 .calendar-body-body-day:active {
                     background-color: #e6e6e6;
                 }
+
                 .calendar-body-body-day.null {
                     cursor: default;
                     pointer-events: none;
                 }
+
                 .calendar-body-body-day:focus {
                     outline: none;
                 }
+
                 .calendar-body-body-day h3 {
                     font-size: 1.2rem;
                     font-weight: 500;
                 }
+
                 .calendar-body-body-day:hover {
                     background-color: #f2f2f2;
                 }
+
                 .calendar-body-body-day:active {
                     background-color: #e6e6e6;
                 }
+                
                 .calendar-body-body-day:focus {
                     outline: none;
-                }
-                .point {
-                    color: #ee0000;
                 }
             `}</style>
         </>
