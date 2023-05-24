@@ -17,12 +17,15 @@
   "devDependencies": {
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
+    "badland": "^0.2.4",
+    "badland-react": "^0.0.7",
     "electron": "^21.3.3",
     "electron-builder": "^23.6.0",
     "next": "^12.3.4",
     "nextron": "^8.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "sass": "^1.62.1",
     "typescript": "^4.9.4"
   }
 }
