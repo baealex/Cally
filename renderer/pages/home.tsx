@@ -92,6 +92,7 @@ function Home() {
           </div>
           <div className="note-content">
             <textarea
+              className="note-textarea"
               value={noteData[selectedDay.current]}
               onChange={(e) => {
                 if (e.target.value === '') {
@@ -193,6 +194,48 @@ function Home() {
         :global(body) {
           background: url(${image ? image : '/images/example.jpg'}) no-repeat center center fixed;
           background-size: cover;
+        }
+
+        .note-title {
+          font-size: 20px;
+          font-weight: bold;
+          margin-bottom: 20px;
+        }
+
+        .note-content {
+          width: 100%;
+          height: 300px;
+          border-radius: 10px;
+          background: #eee;
+        }
+
+        .note-textarea {
+          width: 100%;
+          height: 100%;
+          border: none;
+          outline: none;
+          resize: none;
+          background: transparent;
+          padding: 10px;
+          font-size: 16px;
+        }
+
+        .note-buttons {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 10px;
+        }
+
+        .note-buttons button {
+          width: 80px;
+          height: 30px;
+          border-radius: 5px;
+          border: none;
+          outline: none;
+          background: #000;
+          color: #fff;
+          cursor: pointer;
+          margin-left: 10px;
         }
 
         .settings {

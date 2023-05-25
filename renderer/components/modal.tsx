@@ -11,15 +11,9 @@ export const Modal = ({
 }: ModalProp) => {
     const ref = useRef<HTMLDivElement>(null)
 
-    const handleClick = (e: React.MouseEvent) => {
-        if (ref.current && !ref.current.contains(e.target as Node)) {
-            onClose()
-        }
-    }
-
     return (
         <>
-            <div className="modal" onClick={handleClick}>
+            <div className="modal">
                 <div className="modal__content" ref={ref}>
                     <div className="modal__content__header">
                         <button className="modal__content__header__close" onClick={onClose}>
