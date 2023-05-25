@@ -138,6 +138,23 @@ export const Movement = ({
                 }
 
                 const handleResize = () => {
+                    const centerX = ref.current.offsetLeft + ref.current.offsetWidth / 2
+                    const centerY = ref.current.offsetTop + ref.current.offsetHeight / 2
+
+                    if (centerX < window.innerWidth / 2) {
+                        if (centerY < window.innerHeight / 2) {
+                            position.current = Position.TOP_LEFT
+                        } else {
+                            position.current = Position.BOTTOM_LEFT
+                        }
+                    } else {
+                        if (centerY < window.innerHeight / 2) {
+                            position.current = Position.TOP_RIGHT
+                        } else {
+                            position.current = Position.BOTTOM_RIGHT
+                        }
+                    }
+
                     onMove({
                         top: (
                             position.current === Position.TOP_LEFT ||
