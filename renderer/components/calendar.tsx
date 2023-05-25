@@ -1,8 +1,9 @@
 import { useMemo } from "react"
+import classNames from 'classnames'
 
 const createCalendarData = (year: number, month: number) => {
-    const firstDay = new Date(year, month, 1)
-    const lastDay = new Date(year, month + 1, 0)
+    const firstDay = new Date(year, month - 1, 1)
+    const lastDay = new Date(year, month, 0)
     const firstDayOfWeek = firstDay.getDay()
     const lastDayOfWeek = lastDay.getDay()
     const firstDate = firstDay.getDate()
@@ -43,6 +44,7 @@ const WEEK = [
 interface CalendarProp {
     year: number
     month: number
+    dataInclude: string[]
     defaultColor: string
     pointColor: string
     backgroundColor: string
@@ -54,6 +56,7 @@ interface CalendarProp {
 export const Calendar = ({
     year,
     month,
+    dataInclude,
     defaultColor,
     pointColor,
     backgroundColor,
@@ -64,10 +67,10 @@ export const Calendar = ({
     const calendarData = useMemo(() => {
         return createCalendarData(year, month)
             .filter((week) => week.some((date) => date !== null))
-    }, [year, month]) 
+    }, [year, month])
 
     const handleClickPrevious = () => {
-        if (month === 0) {
+        if (month === 1) {
             onDateChange(year - 1, 11)
         } else {
             onDateChange(year, month - 1)
@@ -75,7 +78,7 @@ export const Calendar = ({
     }
 
     const handleClickNext = () => {
-        if (month === 11) {
+        if (month === 12) {
             onDateChange(year + 1, 0)
         } else {
             onDateChange(year, month + 1)
@@ -86,15 +89,15 @@ export const Calendar = ({
         <>
             <div className="calendar">
                 <div className="calendar-header">
-                        <button className="calendar-header-button-previous" onClick={handleClickPrevious}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 4l-8 8 8 8"/></svg>
-                        </button>
-                        <div className="calendar-header-center">
-                            <h2>{year} / {month + 1}</h2>
-                        </div>
-                        <button className="calendar-header-button-next" onClick={handleClickNext}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 4l8 8-8 8"/></svg>
-                        </button>
+                    <button className="calendar-header-button-previous" onClick={handleClickPrevious}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 4l-8 8 8 8" /></svg>
+                    </button>
+                    <div className="calendar-header-center">
+                        <h2>{year} / {month}</h2>
+                    </div>
+                    <button className="calendar-header-button-next" onClick={handleClickNext}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 4l8 8-8 8" /></svg>
+                    </button>
                 </div>
                 <div className="calendar-body">
                     <div className="calendar-body-header">
@@ -107,14 +110,23 @@ export const Calendar = ({
                     <div className="calendar-body-body">
                         {calendarData.map((week) => week.map((date, index) => {
                             return (
-                                <div className={`calendar-body-body-day ${date === null ? 'null' : index === 0 ? 'point' : ''}`} key={index}>
+                                <div
+                                    key={index}
+                                    className={classNames(
+                                        `calendar-body-body-day`,
+                                        { 'null': date === null },
+                                        { 'point': index === 0 },
+                                        { 'include': dataInclude.includes(String(date)) }
+                                    )}
+                                    onClick={() => date !== null && onDateClick(date)}
+                                >
                                     <h3>{date}</h3>
                                 </div>
                             )
                         }))}
                     </div>
                 </div>
-            </div>
+            </div >
             <style jsx>{`
                 .calendar {
                     position: relative;
@@ -225,21 +237,49 @@ export const Calendar = ({
                 }
 
                 .calendar-body-body-day {
+                    position: relative;
                     width: 40px;
                     height: 40px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    border-radius: 10px;
                     cursor: pointer;
+                    position: relative;
                 }
 
-                .calendar-body-body-day:hover {
-                    background-color: #f2f2f2;
+                .calendar-body-body-day.include::after {
+                    content: '';
+                    width: 4px;
+                    height: 4px;
+                    position: absolute;
+                    z-index: -1;
+                    bottom: 4px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: ${pointColor};
+                    border-radius: 100%;
                 }
 
-                .calendar-body-body-day:active {
-                    background-color: #e6e6e6;
+                .calendar-body-body-day::before {
+                    content: '';
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    z-index: -1;
+                    top: 0;
+                    left: 0;
+                    background-color: ${pointColor};
+                    filter: blur(10px);
+                    opacity: 0;
+                    border-radius: 10px;
+                }
+
+                .calendar-body-body-day:hover::before {
+                    opacity: 0.3;
+                }
+
+                .calendar-body-body-day:active::before {
+                    opacity: 0.5;
                 }
 
                 .calendar-body-body-day.null {
@@ -254,18 +294,6 @@ export const Calendar = ({
                 .calendar-body-body-day h3 {
                     font-size: 1.2rem;
                     font-weight: 500;
-                }
-
-                .calendar-body-body-day:hover {
-                    background-color: #f2f2f2;
-                }
-
-                .calendar-body-body-day:active {
-                    background-color: #e6e6e6;
-                }
-
-                .calendar-body-body-day:focus {
-                    outline: none;
                 }
             `}</style>
         </>
