@@ -32,7 +32,7 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 
-ipcMain.on('config-load-request', (event, arg) => {
+ipcMain.on('config-load-request', (event) => {
   fs.readFile('./config.json', (err, data) => {
     if (err) {
       console.log('config-load-request', err);
@@ -43,7 +43,7 @@ ipcMain.on('config-load-request', (event, arg) => {
   });
 });
 
-ipcMain.on('config-save', (event, arg) => {
+ipcMain.on('config-save', (_, arg) => {
   fs.writeFile('./config.json', JSON.stringify(arg), (err) => {
     if (err) {
       console.log('config-save', err);

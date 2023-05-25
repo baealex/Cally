@@ -3,8 +3,10 @@ import { ipcRenderer } from 'electron'
 
 export const configStore = createStore({
     canMove: true,
-    left: 0,
     top: 0,
+    left: 0,
+    right: null as number,
+    bottom: null as number,
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
     image: null as ArrayBuffer,

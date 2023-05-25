@@ -14,8 +14,10 @@ function Home() {
 
   const [{
     canMove,
-    left,
     top,
+    left,
+    right,
+    bottom,
     year,
     month,
     image,
@@ -43,9 +45,11 @@ function Home() {
     <>
       <Movement
         canMove={canMove}
-        left={left}
         top={top}
-        onMove={(left, top) => setState({ left, top, })}>
+        left={left}
+        right={right}
+        bottom={bottom}
+        onMove={(directions) => setState({ ...directions })}>
         <Calendar
           year={year}
           month={month}
