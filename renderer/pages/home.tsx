@@ -85,7 +85,7 @@ function Home() {
           </div>
           <input
             type="color"
-            defaultValue={defaultColor}
+            value={defaultColor}
             onChange={(e) => setState({ defaultColor: e.target.value })}
           />
           <div className="setting-title">
@@ -93,7 +93,7 @@ function Home() {
           </div>
           <input
             type="color"
-            defaultValue={pointColor}
+            value={pointColor}
             onChange={(e) => setState({ pointColor: e.target.value })}
           />
           <div className="setting-title">
@@ -101,7 +101,7 @@ function Home() {
           </div>
           <input
             type="color"
-            defaultValue={backgroundColor}
+            value={backgroundColor}
             onChange={(e) => setState({ backgroundColor: e.target.value })}
           />
           <div className="setting-title">
@@ -112,7 +112,7 @@ function Home() {
             min="0"
             max="1"
             step="0.1"
-            defaultValue={backgroundOpacity}
+            value={backgroundOpacity}
             onChange={(e) => setState({ backgroundOpacity: e.target.value })}
           />
           <div className="setting-title">
