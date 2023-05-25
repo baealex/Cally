@@ -73,12 +73,17 @@ export const Movement = ({
                 }
             } else {
                 ref.current.style.cursor = 'default'
-                ref.current.style.left = `${left}px`
-                ref.current.style.top = `${top}px`
             }
         }
     }, [ref, canMove])
-    
+
+    useEffect(() => {
+        if (ref.current) {
+            ref.current.style.left = `${left}px`
+            ref.current.style.top = `${top}px`
+        }
+    }, [ref, left, top])
+
     return (
         <>
             <div ref={ref} className="movement">

@@ -1,6 +1,7 @@
-import { app } from 'electron';
+import { app, ipcMain } from 'electron';
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
+import fs from 'fs';
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
@@ -29,4 +30,23 @@ if (isProd) {
 
 app.on('window-all-closed', () => {
   app.quit();
+});
+
+ipcMain.on('config-load-request', (event, arg) => {
+  fs.readFile('./config.json', (err, data) => {
+    if (err) {
+      console.log('config-load-request', err);
+      event.sender.send('config-load', {});
+    } else {
+      event.sender.send('config-load', JSON.parse(data.toString()));
+    }
+  });
+});
+
+ipcMain.on('config-save', (event, arg) => {
+  fs.writeFile('./config.json', JSON.stringify(arg), (err) => {
+    if (err) {
+      console.log('config-save', err);
+    }
+  });
 });
