@@ -1,35 +1,7 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
 
-const createCalendarData = (year: number, month: number) => {
-    const firstDay = new Date(year, month - 1, 1);
-    const lastDay = new Date(year, month, 0);
-    const firstDayOfWeek = firstDay.getDay();
-    const lastDayOfWeek = lastDay.getDay();
-    const firstDate = firstDay.getDate();
-    const lastDate = lastDay.getDate();
-
-    const calendarData = [];
-
-    let date = firstDate;
-    for (let i = 0; i < 6; i++) {
-        const week = [];
-        for (let j = 0; j < 7; j++) {
-            if (i === 0 && j < firstDayOfWeek) {
-                week.push(null);
-            } else if (i === 5 && j > lastDayOfWeek) {
-                week.push(null);
-            } else if (date > lastDate) {
-                week.push(null);
-            } else {
-                week.push(date);
-                date++;
-            }
-        }
-        calendarData.push(week);
-    }
-    return calendarData;
-};
+import { createCalendarData, printMonthEn } from './calendar.helper';
 
 const WEEK = [
     'Sun',
@@ -41,7 +13,7 @@ const WEEK = [
     'Sat'
 ];
 
-interface CalendarProp {
+interface CalendarTableProp {
     year: number;
     month: number;
     dataInclude: string[];
@@ -53,7 +25,7 @@ interface CalendarProp {
     onDateChange: (year: number, month: number) => void;
 }
 
-export const Calendar = ({
+export const CalendarTable = ({
     year,
     month,
     dataInclude,
@@ -63,7 +35,7 @@ export const Calendar = ({
     backgroundOpacity,
     onDateClick,
     onDateChange
-}: CalendarProp) => {
+}: CalendarTableProp) => {
     const calendarData = useMemo(() => {
         return createCalendarData(year, month)
             .filter((week) => week.some((date) => date !== null));
@@ -101,8 +73,11 @@ export const Calendar = ({
                             strokeLinecap="round"
                             strokeLinejoin="round"><path d="M15 4l-8 8 8 8" /></svg>
                     </button>
-                    <div className="calendar-header-center">
-                        <h2>{year} / {month}</h2>
+                    <div className="calendar-header-center point">
+                        <h2>
+                            <span className="calendar-header-center-year">{year}</span>
+                            <span className="calendar-header-center-month">{printMonthEn(month)}</span>
+                        </h2>
                     </div>
                     <button className="calendar-header-button-next" onClick={handleClickNext}>
                         <svg
@@ -205,8 +180,8 @@ export const Calendar = ({
 
                 .calendar-header-button-previous,
                 .calendar-header-button-next {
-                    width: 30px;
-                    height: 30px;
+                    width: 25px;
+                    height: 25px;
                     border: none;
                     background-color: transparent;
                     cursor: pointer;
@@ -237,6 +212,20 @@ export const Calendar = ({
                     align-items: center;
                 }
 
+                .calendar-header-center h2 {
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .calendar-header-center-year {
+                    font-size: 0.6rem;
+                }
+
+                .calendar-header-center-month {
+                }
+
                 .calendar-body-header-day h3 {
                     font-size: 1.2rem;
                     font-weight: 500;
@@ -262,6 +251,11 @@ export const Calendar = ({
                     align-items: center;
                     cursor: pointer;
                     position: relative;
+                }
+
+                .calendar-body-body-day h3 {
+                    font-size: 1.2rem;
+                    font-weight: 500;
                 }
 
                 .calendar-body-body-day.include::after {
@@ -306,11 +300,6 @@ export const Calendar = ({
 
                 .calendar-body-body-day:focus {
                     outline: none;
-                }
-
-                .calendar-body-body-day h3 {
-                    font-size: 1.2rem;
-                    font-weight: 500;
                 }
             `}</style>
         </>

@@ -77,7 +77,12 @@ if (isProd) {
                 console.log('config-load-request', err);
                 event.sender.send('config-load', {});
             } else {
-                event.sender.send('config-load', JSON.parse(data.toString()));
+                try {
+                    event.sender.send('config-load', JSON.parse(data.toString()));
+                } catch (e) {
+                    console.log('config-load-request', e);
+                    event.sender.send('config-load', {});
+                }
             }
         });
     });

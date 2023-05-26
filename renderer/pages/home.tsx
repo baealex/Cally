@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { ipcRenderer } from 'electron';
 
-import { Calendar } from '../components/calendar';
+import { CalendarLine } from '../components/calendar-line';
+import { CalendarTable } from '../components/calendar-table';
 import { Modal } from '../components/modal';
 import { Movement } from '../components/movement';
 import { Toggle } from '../components/toggle';
@@ -11,7 +12,9 @@ import { useStore } from 'badland-react';
 function Home() {
     const [isLoaded, setIsLoaded] = React.useState(false);
 
-    const [{
+    const [state, setState] = useStore(configStore);
+    const {
+        style,
         canMove,
         top,
         left,
@@ -24,7 +27,7 @@ function Home() {
         pointColor,
         backgroundColor,
         backgroundOpacity
-    }, setState] = useStore(configStore);
+    } = state;
 
     const selectedDay = useRef<string>(null);
     const [isOpenedNote, setIsOpenedNote] = React.useState(false);
@@ -79,17 +82,22 @@ function Home() {
                 right={right}
                 bottom={bottom}
                 onMove={(directions) => setState({ ...directions })}>
-                <Calendar
-                    year={year}
-                    month={month}
-                    dataInclude={Object.keys(noteData)}
-                    defaultColor={defaultColor}
-                    pointColor={pointColor}
-                    backgroundColor={backgroundColor}
-                    backgroundOpacity={backgroundOpacity}
-                    onDateClick={handleClickDate}
-                    onDateChange={hnadleChangeDate}
-                />
+                {style === 'table' && (
+                    <CalendarTable
+                        {...state}
+                        dataInclude={Object.keys(noteData)}
+                        onDateClick={handleClickDate}
+                        onDateChange={hnadleChangeDate}
+                    />
+                )}
+                {style === 'line' && (
+                    <CalendarLine
+                        {...state}
+                        dataInclude={Object.keys(noteData)}
+                        onDateClick={handleClickDate}
+                        onDateChange={hnadleChangeDate}
+                    />
+                )}
             </Movement>
             <div className="settings" onClick={() => setIsOpenedSetting(true)}>
                 <svg
@@ -150,9 +158,15 @@ function Home() {
                         달력 스타일
                     </div>
                     <div className="calendar-style">
-                        <div className="calendar-style-item"></div>
-                        <div className="calendar-style-item"></div>
-                        <div className="calendar-style-item"></div>
+                        <div className="calendar-style-item" onClick={() => setState({ style: 'table' })}>
+                            Table
+                        </div>
+                        <div className="calendar-style-item" onClick={() => setState({ style: 'line' })}>
+                            Line
+                        </div>
+                        <div className="calendar-style-item">
+                            To be continued...
+                        </div>
                     </div>
                     <div className="setting-title">
                         달력 위치 고정
@@ -217,85 +231,102 @@ function Home() {
                 </Modal>
             )}
             <style jsx>{`
-              :global(body) {
-                background: url(${image ? image : '/images/example.jpg'}) no-repeat center center fixed;
-                background-size: cover;
-              }
+                :global(body) {
+                    background: url(${image ? image : '/images/example.jpg'}) no-repeat center center fixed;
+                    background-size: cover;
+                }
 
-              .note-title {
-                font-size: 20px;
-                font-weight: bold;
-                margin-bottom: 20px;
-              }
+                .note-title {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                }
 
-              .note-content {
-                width: 100%;
-                height: 300px;
-                border-radius: 10px;
-                background: #eee;
-              }
+                .note-content {
+                    width: 100%;
+                    height: 300px;
+                    border-radius: 10px;
+                    background: #eee;
+                }
 
-              .note-textarea {
-                width: 100%;
-                height: 100%;
-                border: none;
-                outline: none;
-                resize: none;
-                background: transparent;
-                padding: 10px;
-                font-size: 16px;
-              }
+                .note-textarea {
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                    outline: none;
+                    resize: none;
+                    background: transparent;
+                    padding: 10px;
+                    font-size: 16px;
+                }
 
-              .note-buttons {
-                display: flex;
-                justify-content: flex-end;
-                margin-top: 10px;
-              }
+                .note-buttons {
+                    display: flex;
+                    justify-content: flex-end;
+                    margin-top: 10px;
+                }
 
-              .note-buttons button {
-                width: 80px;
-                height: 30px;
-                border-radius: 5px;
-                border: none;
-                outline: none;
-                background: #000;
-                color: #fff;
-                cursor: pointer;
-                margin-left: 10px;
-              }
+                .note-buttons button {
+                    width: 80px;
+                    height: 30px;
+                    border-radius: 5px;
+                    border: none;
+                    outline: none;
+                    background: #000;
+                    color: #fff;
+                    cursor: pointer;
+                    margin-left: 10px;
+                }
 
-              .settings {
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                width: 24px;
-                height: 24px;
-                margin: 10px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                cursor: pointer;
-              }
+                .settings {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    width: 24px;
+                    height: 24px;
+                    margin: 10px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                }
 
-              .setting-title {
-                font-size: 14px;
-                font-weight: bold;
-                margin-bottom: 10px;
-              }
+                .setting-title {
+                    font-size: 14px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
 
-              .calendar-style {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                grid-gap: 10px;
-                margin-bottom: 20px;
-              }
+                .calendar-style {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    grid-gap: 10px;
+                    margin-bottom: 20px;
+                }
 
-              .calendar-style-item {
-                width: 100%;
-                height: 200px;
-                border-radius: 10px;
-                background: #ccc;
-              }
+                .calendar-style-item {
+                    width: 100%;
+                    height: 200px;
+                    border-radius: 10px;
+                    background: #ccc;
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: flex-end;
+                    font-size: 0.8rem;
+                    font-weight: bold;
+                    padding: 8px 16px;
+                    cursor: pointer;
+                }
+
+                .calendar-style-item:nth-child(1) {
+                    background: url('/images/1.jpg') no-repeat center center;
+                    background-size: cover;
+                }
+
+                .calendar-style-item:nth-child(2) {
+                    background: url('/images/2.jpg') no-repeat center center;
+                    background-size: cover;
+                }
             `}</style>
         </>
     );

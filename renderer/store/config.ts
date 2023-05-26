@@ -2,6 +2,7 @@ import { createStore } from 'badland';
 import { ipcRenderer } from 'electron';
 
 export const configStore = createStore({
+    style: 'table' as 'table' | 'line',
     canMove: true,
     top: 0,
     left: 0,

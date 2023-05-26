@@ -1,19 +1,17 @@
 @font-face {
     font-family: 'BMHANNAAir';
-    font-weight: 600;
     src: local('BMHANNAAir'), url('/fonts/BMHANNAAir.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'BMHANNAPro';
-    font-weight: 600;
-    src: local('BMHANNAPro'), url('/fonts/BMHANNAPro.ttf') format('truetype');
 }
 
 *,
 ::after,
 ::before {
     box-sizing: border-box;
+}
+
+html,
+body {
+    overflow: hidden;
 }
 
 body,
