@@ -23,8 +23,29 @@ if (isProd) {
         });
     }
 
+    ipcMain.on('note-load-request', (event, arg) => {
+        const fileName = `${arg.year}${('0' + arg.month).slice(-2)}.json`;
+        const filePath = `./data/${fileName}`;
+
+        if (!fs.existsSync(filePath)) {
+            event.sender.send('note-load', {});
+            return;
+        }
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
+                console.log('note-load-request', err);
+                event.sender.send('note-load', {});
+            } else {
+                event.sender.send('note-load', JSON.parse(data.toString()));
+            }
+        });
+    });
+
     ipcMain.on('note-save', (_, arg) => {
-        fs.writeFile(`./data/${arg.year}${('0' + arg.month).slice(-2)}.json`, JSON.stringify(arg.data), (err) => {
+        const fileName = `${arg.year}${('0' + arg.month).slice(-2)}.json`;
+        const filePath = `./data/${fileName}`;
+
+        fs.writeFile(filePath, JSON.stringify(arg.data), (err) => {
             if (err) {
                 console.log('note-save', err);
             }
@@ -32,7 +53,13 @@ if (isProd) {
     });
 
     ipcMain.on('config-load-request', (event) => {
-        fs.readFile('./data/config.json', (err, data) => {
+        const filePath = './data/config.json';
+
+        if (!fs.existsSync(filePath)) {
+            event.sender.send('config-load', {});
+            return;
+        }
+        fs.readFile(filePath, (err, data) => {
             if (err) {
                 console.log('config-load-request', err);
                 event.sender.send('config-load', {});
@@ -43,20 +70,11 @@ if (isProd) {
     });
 
     ipcMain.on('config-save', (_, arg) => {
-        fs.writeFile('./data/config.json', JSON.stringify(arg), (err) => {
+        const filePath = './data/config.json';
+
+        fs.writeFile(filePath, JSON.stringify(arg), (err) => {
             if (err) {
                 console.log('config-save', err);
-            }
-        });
-    });
-
-    ipcMain.on('note-load-request', (event, arg) => {
-        fs.readFile(`./data/${arg.year}${('0' + arg.month).slice(-2)}.json`, (err, data) => {
-            if (err) {
-                console.log('note-load-request', err);
-                event.sender.send('note-load', {});
-            } else {
-                event.sender.send('note-load', JSON.parse(data.toString()));
             }
         });
     });
