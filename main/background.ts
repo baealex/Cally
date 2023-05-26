@@ -6,6 +6,14 @@ import { createWindow, versionCheck } from './helpers';
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
+function tryJsonParse<T>(str: string): T {
+    try {
+        return JSON.parse(str);
+    } catch (e) {
+        return null;
+    }
+}
+
 if (isProd) {
     serve({ directory: 'app' });
 } else {
@@ -49,7 +57,7 @@ if (isProd) {
                 console.log('note-load-request', err);
                 event.sender.send('note-load', {});
             } else {
-                event.sender.send('note-load', JSON.parse(data.toString()));
+                event.sender.send('note-load', tryJsonParse(data.toString()) || {});
             }
         });
     });
@@ -77,12 +85,7 @@ if (isProd) {
                 console.log('config-load-request', err);
                 event.sender.send('config-load', {});
             } else {
-                try {
-                    event.sender.send('config-load', JSON.parse(data.toString()));
-                } catch (e) {
-                    console.log('config-load-request', e);
-                    event.sender.send('config-load', {});
-                }
+                event.sender.send('config-load', tryJsonParse(data.toString()) || {});
             }
         });
     });
