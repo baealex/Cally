@@ -1,8 +1,9 @@
-import { app, ipcMain } from 'electron';
+import { app, dialog, ipcMain, shell } from 'electron';
+import axios from 'axios';
 import fs from 'fs';
 import serve from 'electron-serve';
 
-import { createWindow } from './helpers';
+import { CompareResult, createWindow, versionCompare } from './helpers';
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
@@ -14,6 +15,30 @@ if (isProd) {
 
 (async () => {
     await app.whenReady();
+
+    try {
+        const res = await axios.get('https://raw.githubusercontent.com/baealex/IUCalendar/remake/package.json');
+        const version = res.data.version;
+
+        if (versionCompare(version, app.getVersion()) === CompareResult.AIsBigger) {
+            const dialogOpts = {
+                type: 'info',
+                buttons: ['예', '아니요'],
+                title: '업데이트 알림',
+                message: `새로운 버전(${version})이 있습니다.`,
+                detail: '다운로드 페이지로 이동하시겠습니까?'
+            };
+
+            dialog.showMessageBox(dialogOpts).then((returnValue) => {
+                if (returnValue.response === 0) {
+                    shell.openExternal('https://github.com/baealex/IUCalendar/releases');
+                }
+            });
+        }
+    } catch (e) {
+        console.log('update-check-failure', e);
+    }
+
 
     if (!fs.existsSync('./data')) {
         fs.mkdir('./data', (err) => {

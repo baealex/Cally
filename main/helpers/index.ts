@@ -1,5 +1,2 @@
-import createWindow from './create-window';
-
-export {
-    createWindow
-};
+export { default as createWindow } from './create-window';
+export * from './version';
