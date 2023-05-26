@@ -14,17 +14,8 @@ export default (windowName: string, options: BrowserWindowConstructorOptions): B
         height: options.height
     };
     let state = {};
-
-    const browserOptions: BrowserWindowConstructorOptions = {
-        ...state,
-        ...options,
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
-            ...options.webPreferences
-        }
-    };
-    const win = new BrowserWindow(browserOptions);
+    // eslint-disable-next-line prefer-const
+    let win: BrowserWindow;
 
     const restore = () => store.get(key, defaultSize);
 
@@ -76,6 +67,17 @@ export default (windowName: string, options: BrowserWindowConstructorOptions): B
     };
 
     state = ensureVisibleOnSomeDisplay(restore());
+
+    const browserOptions: BrowserWindowConstructorOptions = {
+        ...options,
+        ...state,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+            ...options.webPreferences
+        }
+    };
+    win = new BrowserWindow(browserOptions);
 
     win.on('close', saveState);
 
