@@ -39,9 +39,10 @@ if (isProd) {
         console.log('update-check-failure', e);
     }
 
+    const userDataPath = app.getPath('appData') + '/IUCalendarData';
 
-    if (!fs.existsSync('./data')) {
-        fs.mkdir('./data', (err) => {
+    if (!fs.existsSync(userDataPath)) {
+        fs.mkdir(userDataPath, (err) => {
             if (err) {
                 console.log('mkdir', err);
             }
@@ -50,7 +51,7 @@ if (isProd) {
 
     ipcMain.on('note-load-request', (event, arg) => {
         const fileName = `${arg.year}${('0' + arg.month).slice(-2)}.json`;
-        const filePath = `./data/${fileName}`;
+        const filePath = `${userDataPath}/${fileName}`;
 
         if (!fs.existsSync(filePath)) {
             event.sender.send('note-load', {});
@@ -68,7 +69,7 @@ if (isProd) {
 
     ipcMain.on('note-save', (_, arg) => {
         const fileName = `${arg.year}${('0' + arg.month).slice(-2)}.json`;
-        const filePath = `./data/${fileName}`;
+        const filePath = `${userDataPath}/${fileName}`;
 
         fs.writeFile(filePath, JSON.stringify(arg.data), (err) => {
             if (err) {
@@ -78,7 +79,7 @@ if (isProd) {
     });
 
     ipcMain.on('config-load-request', (event) => {
-        const filePath = './data/config.json';
+        const filePath = `${userDataPath}/config.json`;
 
         if (!fs.existsSync(filePath)) {
             event.sender.send('config-load', {});
@@ -95,7 +96,7 @@ if (isProd) {
     });
 
     ipcMain.on('config-save', (_, arg) => {
-        const filePath = './data/config.json';
+        const filePath = `${userDataPath}/config.json`;
 
         fs.writeFile(filePath, JSON.stringify(arg), (err) => {
             if (err) {
@@ -106,7 +107,8 @@ if (isProd) {
 
     const mainWindow = createWindow('main', {
         width: 1000,
-        height: 600
+        height: 600,
+        autoHideMenuBar: isProd ? true : false
     });
 
     if (isProd) {
@@ -114,7 +116,7 @@ if (isProd) {
     } else {
         const port = process.argv[2];
         await mainWindow.loadURL(`http://localhost:${port}/home`);
-        mainWindow.webContents.openDevTools();
+        // mainWindow.webContents.openDevTools();
     }
 })();
 
