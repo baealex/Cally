@@ -1,5 +1,5 @@
-import { createStore } from 'badland'
-import { ipcRenderer } from 'electron'
+import { createStore } from 'badland';
+import { ipcRenderer } from 'electron';
 
 export const configStore = createStore({
     canMove: true,
@@ -13,9 +13,9 @@ export const configStore = createStore({
     defaultColor: '#000000',
     pointColor: '#ff0000',
     backgroundColor: '#ffffff',
-    backgroundOpacity: '0',
-})
+    backgroundOpacity: '0'
+});
 
 configStore.afterStateChange = () => {
-    ipcRenderer.send('config-save', configStore.state)
-}
+    ipcRenderer.send('config-save', configStore.state);
+};

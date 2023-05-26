@@ -1,20 +1,18 @@
-import { createStore } from 'badland'
-import { useValue } from 'badland-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react';
 
 interface MovementState {
-    canMove: boolean
-    top: number | null
-    left: number | null
-    right: number | null
-    bottom: number | null
+    canMove: boolean;
+    top: number | null;
+    left: number | null;
+    right: number | null;
+    bottom: number | null;
     onMove: (directions: {
-        top: number | null
-        left: number | null
-        right: number | null
-        bottom: number | null
-    }) => void
-    children?: React.ReactNode
+        top: number | null;
+        left: number | null;
+        right: number | null;
+        bottom: number | null;
+    }) => void;
+    children?: React.ReactNode;
 }
 
 enum Position {
@@ -33,41 +31,41 @@ export const Movement = ({
     onMove,
     children
 }: MovementState) => {
-    const ref = useRef<HTMLDivElement>(null)
+    const ref = useRef<HTMLDivElement>(null);
 
-    const position = useRef<Position>(Position.TOP_LEFT)
+    const position = useRef<Position>(Position.TOP_LEFT);
 
     useEffect(() => {
         if (ref.current) {
             if (canMove) {
-                let move = false
-                let initX = 0
-                let initY = 0
+                let move = false;
+                let initX = 0;
+                let initY = 0;
 
                 const handleMouseDown = (e: MouseEvent) => {
-                    move = true
-                    initX = e.clientX - ref.current.offsetLeft
-                    initY = e.clientY - ref.current.offsetTop
-                }
+                    move = true;
+                    initX = e.clientX - ref.current.offsetLeft;
+                    initY = e.clientY - ref.current.offsetTop;
+                };
 
                 const handleMouseMove = (e: MouseEvent) => {
                     if (move) {
-                        ref.current.style.cursor = 'grabbing'
+                        ref.current.style.cursor = 'grabbing';
 
-                        const centerX = ref.current.offsetLeft + ref.current.offsetWidth / 2
-                        const centerY = ref.current.offsetTop + ref.current.offsetHeight / 2
+                        const centerX = ref.current.offsetLeft + ref.current.offsetWidth / 2;
+                        const centerY = ref.current.offsetTop + ref.current.offsetHeight / 2;
 
                         if (centerX < window.innerWidth / 2) {
                             if (centerY < window.innerHeight / 2) {
-                                position.current = Position.TOP_LEFT
+                                position.current = Position.TOP_LEFT;
                             } else {
-                                position.current = Position.BOTTOM_LEFT
+                                position.current = Position.BOTTOM_LEFT;
                             }
                         } else {
                             if (centerY < window.innerHeight / 2) {
-                                position.current = Position.TOP_RIGHT
+                                position.current = Position.TOP_RIGHT;
                             } else {
-                                position.current = Position.BOTTOM_RIGHT
+                                position.current = Position.BOTTOM_RIGHT;
                             }
                         }
 
@@ -75,48 +73,48 @@ export const Movement = ({
                             position.current === Position.BOTTOM_LEFT
                         ) {
                             if (e.clientX - initX >= 0) {
-                                ref.current.style.left = `${e.clientX - initX}px`
-                                ref.current.style.right = 'auto'
+                                ref.current.style.left = `${e.clientX - initX}px`;
+                                ref.current.style.right = 'auto';
                             } else {
-                                ref.current.style.left = '0px'
-                                ref.current.style.right = 'auto'
+                                ref.current.style.left = '0px';
+                                ref.current.style.right = 'auto';
                             }
                         }
                         if (position.current === Position.TOP_LEFT ||
                             position.current === Position.TOP_RIGHT) {
                             if (e.clientY - initY >= 0) {
-                                ref.current.style.top = `${e.clientY - initY}px`
-                                ref.current.style.bottom = 'auto'
+                                ref.current.style.top = `${e.clientY - initY}px`;
+                                ref.current.style.bottom = 'auto';
                             } else {
-                                ref.current.style.top = '0px'
-                                ref.current.style.bottom = 'auto'
+                                ref.current.style.top = '0px';
+                                ref.current.style.bottom = 'auto';
                             }
                         }
                         if (position.current === Position.BOTTOM_RIGHT ||
                             position.current === Position.TOP_RIGHT) {
                             if (window.innerWidth - e.clientX - ref.current.offsetWidth + initX > 0) {
-                                ref.current.style.right = `${window.innerWidth - e.clientX - ref.current.offsetWidth + initX}px`
-                                ref.current.style.left = 'auto'
+                                ref.current.style.right = `${window.innerWidth - e.clientX - ref.current.offsetWidth + initX}px`;
+                                ref.current.style.left = 'auto';
                             } else {
-                                ref.current.style.right = '0px'
-                                ref.current.style.left = 'auto'
+                                ref.current.style.right = '0px';
+                                ref.current.style.left = 'auto';
                             }
                         }
                         if (position.current === Position.BOTTOM_LEFT ||
                             position.current === Position.BOTTOM_RIGHT) {
                             if (window.innerHeight - e.clientY - ref.current.offsetHeight + initY > 0) {
-                                ref.current.style.bottom = `${window.innerHeight - e.clientY - ref.current.offsetHeight + initY}px`
-                                ref.current.style.top = 'auto'
+                                ref.current.style.bottom = `${window.innerHeight - e.clientY - ref.current.offsetHeight + initY}px`;
+                                ref.current.style.top = 'auto';
                             } else {
-                                ref.current.style.bottom = '0px'
-                                ref.current.style.top = 'auto'
+                                ref.current.style.bottom = '0px';
+                                ref.current.style.top = 'auto';
                             }
                         }
                     }
-                }
+                };
 
                 const handleMouseUp = () => {
-                    move = false
+                    move = false;
                     onMove({
                         top: (
                             position.current === Position.TOP_LEFT ||
@@ -134,24 +132,24 @@ export const Movement = ({
                             position.current === Position.BOTTOM_LEFT ||
                             position.current === Position.BOTTOM_RIGHT)
                             ? window.innerHeight - ref.current.offsetTop - ref.current.offsetHeight : null
-                    })
-                }
+                    });
+                };
 
                 const handleResize = () => {
-                    const centerX = ref.current.offsetLeft + ref.current.offsetWidth / 2
-                    const centerY = ref.current.offsetTop + ref.current.offsetHeight / 2
+                    const centerX = ref.current.offsetLeft + ref.current.offsetWidth / 2;
+                    const centerY = ref.current.offsetTop + ref.current.offsetHeight / 2;
 
                     if (centerX < window.innerWidth / 2) {
                         if (centerY < window.innerHeight / 2) {
-                            position.current = Position.TOP_LEFT
+                            position.current = Position.TOP_LEFT;
                         } else {
-                            position.current = Position.BOTTOM_LEFT
+                            position.current = Position.BOTTOM_LEFT;
                         }
                     } else {
                         if (centerY < window.innerHeight / 2) {
-                            position.current = Position.TOP_RIGHT
+                            position.current = Position.TOP_RIGHT;
                         } else {
-                            position.current = Position.BOTTOM_RIGHT
+                            position.current = Position.BOTTOM_RIGHT;
                         }
                     }
 
@@ -172,46 +170,46 @@ export const Movement = ({
                             position.current === Position.BOTTOM_LEFT ||
                             position.current === Position.BOTTOM_RIGHT)
                             ? window.innerHeight - ref.current.offsetTop - ref.current.offsetHeight : null
-                    })
-                }
+                    });
+                };
 
-                ref.current.style.cursor = 'grab'
-                ref.current.addEventListener('mousedown', handleMouseDown)
-                window.addEventListener('mousemove', handleMouseMove)
-                window.addEventListener('resize', handleResize)
-                ref.current.addEventListener('mouseup', handleMouseUp)
+                ref.current.style.cursor = 'grab';
+                ref.current.addEventListener('mousedown', handleMouseDown);
+                window.addEventListener('mousemove', handleMouseMove);
+                window.addEventListener('resize', handleResize);
+                ref.current.addEventListener('mouseup', handleMouseUp);
                 return () => {
-                    ref.current.removeEventListener('mousedown', handleMouseDown)
-                    window.removeEventListener('mousemove', handleMouseMove)
-                    window.removeEventListener('resize', handleResize)
-                    ref.current.removeEventListener('mouseup', handleMouseUp)
-                }
+                    ref.current.removeEventListener('mousedown', handleMouseDown);
+                    window.removeEventListener('mousemove', handleMouseMove);
+                    window.removeEventListener('resize', handleResize);
+                    ref.current.removeEventListener('mouseup', handleMouseUp);
+                };
             } else {
-                ref.current.style.cursor = 'default'
+                ref.current.style.cursor = 'default';
             }
         }
-    }, [ref, canMove])
+    }, [ref, canMove]);
 
     useEffect(() => {
         if (ref.current) {
             if (top !== null) {
-                ref.current.style.top = `${top}px`
-                ref.current.style.bottom = 'auto'
+                ref.current.style.top = `${top}px`;
+                ref.current.style.bottom = 'auto';
             }
             if (left !== null) {
-                ref.current.style.left = `${left}px`
-                ref.current.style.right = 'auto'
+                ref.current.style.left = `${left}px`;
+                ref.current.style.right = 'auto';
             }
             if (right !== null) {
-                ref.current.style.right = `${right}px`
-                ref.current.style.left = 'auto'
+                ref.current.style.right = `${right}px`;
+                ref.current.style.left = 'auto';
             }
             if (bottom !== null) {
-                ref.current.style.bottom = `${bottom}px`
-                ref.current.style.top = 'auto'
+                ref.current.style.bottom = `${bottom}px`;
+                ref.current.style.top = 'auto';
             }
         }
-    }, [ref, top, left, right, bottom])
+    }, [ref, top, left, right, bottom]);
 
     return (
         <>
@@ -225,5 +223,5 @@ export const Movement = ({
                 }
             `}</style>
         </>
-    )
-}
+    );
+};

@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
+    "lint": "eslint . --ext .js,.ts,.tsx",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
@@ -17,11 +18,14 @@
   "devDependencies": {
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
     "badland": "^0.2.4",
     "badland-react": "^0.0.7",
     "classnames": "^2.3.2",
     "electron": "^21.3.3",
     "electron-builder": "^23.6.0",
+    "eslint": "^8.41.0",
+    "eslint-plugin-react": "^7.32.2",
     "next": "^12.3.4",
     "nextron": "^8.5.0",
     "react": "^18.2.0",

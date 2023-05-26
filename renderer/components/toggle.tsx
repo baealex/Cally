@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useState } from 'react';
 
 interface ToggleProp {
-    defaultChecked: boolean
-    onChange: (checked: boolean) => void
-    children?: React.ReactNode
-    className?: string
+    defaultChecked: boolean;
+    onChange: (checked: boolean) => void;
+    children?: React.ReactNode;
+    className?: string;
 }
 
 export const Toggle = ({
@@ -13,15 +13,15 @@ export const Toggle = ({
     children,
     className
 }: ToggleProp) => {
-    const [checked, setChecked] = useState(defaultChecked)
+    const [checked, setChecked] = useState(defaultChecked);
 
     return (
         <>
             <div
                 className={`toggle ${className} ${checked && 'active'}`}
                 onClick={() => {
-                    setChecked(!checked)
-                    onChange(!checked)
+                    setChecked(!checked);
+                    onChange(!checked);
                 }}>
                 <div className="toggle-item"></div>
             </div>
@@ -57,5 +57,5 @@ export const Toggle = ({
                 }
             `}</style>
         </>
-    )
-}
+    );
+};

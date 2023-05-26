@@ -1,35 +1,35 @@
-import { useMemo } from "react"
-import classNames from 'classnames'
+import classNames from 'classnames';
+import { useMemo } from 'react';
 
 const createCalendarData = (year: number, month: number) => {
-    const firstDay = new Date(year, month - 1, 1)
-    const lastDay = new Date(year, month, 0)
-    const firstDayOfWeek = firstDay.getDay()
-    const lastDayOfWeek = lastDay.getDay()
-    const firstDate = firstDay.getDate()
-    const lastDate = lastDay.getDate()
+    const firstDay = new Date(year, month - 1, 1);
+    const lastDay = new Date(year, month, 0);
+    const firstDayOfWeek = firstDay.getDay();
+    const lastDayOfWeek = lastDay.getDay();
+    const firstDate = firstDay.getDate();
+    const lastDate = lastDay.getDate();
 
-    const calendarData = []
+    const calendarData = [];
 
-    let date = firstDate
+    let date = firstDate;
     for (let i = 0; i < 6; i++) {
-        const week = []
+        const week = [];
         for (let j = 0; j < 7; j++) {
             if (i === 0 && j < firstDayOfWeek) {
-                week.push(null)
+                week.push(null);
             } else if (i === 5 && j > lastDayOfWeek) {
-                week.push(null)
+                week.push(null);
             } else if (date > lastDate) {
-                week.push(null)
+                week.push(null);
             } else {
-                week.push(date)
-                date++
+                week.push(date);
+                date++;
             }
         }
-        calendarData.push(week)
+        calendarData.push(week);
     }
-    return calendarData
-}
+    return calendarData;
+};
 
 const WEEK = [
     'Sun',
@@ -39,18 +39,18 @@ const WEEK = [
     'Thu',
     'Fri',
     'Sat'
-]
+];
 
 interface CalendarProp {
-    year: number
-    month: number
-    dataInclude: string[]
-    defaultColor: string
-    pointColor: string
-    backgroundColor: string
-    backgroundOpacity: string
-    onDateClick: (date: number) => void
-    onDateChange: (year: number, month: number) => void
+    year: number;
+    month: number;
+    dataInclude: string[];
+    defaultColor: string;
+    pointColor: string;
+    backgroundColor: string;
+    backgroundOpacity: string;
+    onDateClick: (date: number) => void;
+    onDateChange: (year: number, month: number) => void;
 }
 
 export const Calendar = ({
@@ -66,37 +66,55 @@ export const Calendar = ({
 }: CalendarProp) => {
     const calendarData = useMemo(() => {
         return createCalendarData(year, month)
-            .filter((week) => week.some((date) => date !== null))
-    }, [year, month])
+            .filter((week) => week.some((date) => date !== null));
+    }, [year, month]);
 
     const handleClickPrevious = () => {
         if (month === 1) {
-            onDateChange(year - 1, 11)
+            onDateChange(year - 1, 11);
         } else {
-            onDateChange(year, month - 1)
+            onDateChange(year, month - 1);
         }
-    }
+    };
 
     const handleClickNext = () => {
         if (month === 12) {
-            onDateChange(year + 1, 0)
+            onDateChange(year + 1, 0);
         } else {
-            onDateChange(year, month + 1)
+            onDateChange(year, month + 1);
         }
-    }
+    };
 
     return (
         <>
             <div className="calendar">
                 <div className="calendar-header">
                     <button className="calendar-header-button-previous" onClick={handleClickPrevious}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 4l-8 8 8 8" /></svg>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="36"
+                            height="36"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"><path d="M15 4l-8 8 8 8" /></svg>
                     </button>
                     <div className="calendar-header-center">
                         <h2>{year} / {month}</h2>
                     </div>
                     <button className="calendar-header-button-next" onClick={handleClickNext}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 4l8 8-8 8" /></svg>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="36"
+                            height="36"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"><path d="M8 4l8 8-8 8" /></svg>
                     </button>
                 </div>
                 <div className="calendar-body">
@@ -113,16 +131,15 @@ export const Calendar = ({
                                 <div
                                     key={index}
                                     className={classNames(
-                                        `calendar-body-body-day`,
+                                        'calendar-body-body-day',
                                         { 'null': date === null },
                                         { 'point': index === 0 },
                                         { 'include': dataInclude.includes(String(date)) }
                                     )}
-                                    onClick={() => date !== null && onDateClick(date)}
-                                >
+                                    onClick={() => date !== null && onDateClick(date)}>
                                     <h3>{date}</h3>
                                 </div>
-                            )
+                            );
                         }))}
                     </div>
                 </div>
@@ -297,5 +314,5 @@ export const Calendar = ({
                 }
             `}</style>
         </>
-    )
-}
+    );
+};
