@@ -1,9 +1,8 @@
-import { app, dialog, ipcMain, shell } from 'electron';
-import axios from 'axios';
+import { app, ipcMain } from 'electron';
 import fs from 'fs';
 import serve from 'electron-serve';
 
-import { CompareResult, createWindow, versionCompare } from './helpers';
+import { createWindow, versionCheck } from './helpers';
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
@@ -17,22 +16,10 @@ if (isProd) {
     await app.whenReady();
 
     try {
-        const res = await axios.get('https://raw.githubusercontent.com/baealex/IUCalendar/remake/package.json');
-        const version = res.data.version;
-
-        if (versionCompare(version, app.getVersion()) === CompareResult.AIsBigger) {
-            const dialogOpts = {
-                type: 'info',
-                buttons: ['예', '아니요'],
-                title: '업데이트 알림',
-                message: `새로운 버전(${version})이 있습니다.`,
-                detail: '다운로드 페이지로 이동하시겠습니까?'
-            };
-
-            dialog.showMessageBox(dialogOpts).then((returnValue) => {
-                if (returnValue.response === 0) {
-                    shell.openExternal('https://github.com/baealex/IUCalendar/releases');
-                }
+        if (process.platform === 'win32' && process.arch === 'x64') {
+            versionCheck({
+                feedURL: 'https://raw.githubusercontent.com/baealex/IUCalendar/remake/package.json',
+                openURL: 'https://www.dropbox.com/sh/acxa647t1bazap6/AAAv0A-GPzLyeaotKFCuM7tHa?dl=1'
             });
         }
     } catch (e) {

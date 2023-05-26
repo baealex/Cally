@@ -1,2 +1,2 @@
 export { default as createWindow } from './create-window';
-export * from './version';
+export { default as versionCheck } from './version-check';
