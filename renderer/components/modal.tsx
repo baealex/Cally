@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface ModalProp {
     children?: React.ReactNode;
@@ -10,6 +10,19 @@ export const Modal = ({
     onClose
 }: ModalProp) => {
     const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                onClose();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    });
 
     return (
         <>
