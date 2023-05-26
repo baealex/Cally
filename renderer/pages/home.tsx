@@ -232,7 +232,7 @@ function Home() {
             )}
             <style jsx>{`
                 :global(body) {
-                    background: url(${image ? image : '/images/example.jpg'}) no-repeat center center fixed;
+                    background: url(${image ? image : '/images/default.jpg'}) no-repeat center center fixed;
                     background-size: cover;
                 }
 
