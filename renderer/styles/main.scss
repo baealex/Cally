@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'BMHANNAAir';
+    src: local('BMHANNAAir'), url('/fonts/BMHANNAAir.ttf') format('truetype');
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    overflow: hidden;
+}
+
+body,
+input,
+textarea,
+button {
+    font-family: 'BMHANNAAir';
+}
