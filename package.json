@@ -1,8 +1,8 @@
 {
   "private": true,
   "name": "iucalendar",
-  "description": "The calendar filled with your preferences",
-  "version": "1.0.0",
+  "description": "Make calendar filled with your preferences",
+  "version": "0.0.1",
   "author": "Jino Bae <im@baejino.com>",
   "main": "app/background.js",
   "scripts": {
