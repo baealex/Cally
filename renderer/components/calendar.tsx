@@ -71,7 +71,7 @@ export const Calendar = ({
 
     const handleClickPrevious = () => {
         if (month === 1) {
-            onDateChange(year - 1, 11);
+            onDateChange(year - 1, 12);
         } else {
             onDateChange(year, month - 1);
         }
@@ -79,7 +79,7 @@ export const Calendar = ({
 
     const handleClickNext = () => {
         if (month === 12) {
-            onDateChange(year + 1, 0);
+            onDateChange(year + 1, 1);
         } else {
             onDateChange(year, month + 1);
         }
