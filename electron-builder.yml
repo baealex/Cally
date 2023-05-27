@@ -1,5 +1,5 @@
-appId: com.baejino.iucalendar
-productName: IUCalendar
+appId: com.baejino.cally
+productName: Cally
 copyright: Copyright © 2023 Jono Bae
 directories:
   output: dist

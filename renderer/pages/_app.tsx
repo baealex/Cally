@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }) {
     return (
         <>
             <Head>
-                <title>IUCalendar</title>
+                <title>Cally</title>
             </Head>
             <div>
                 <Component {...pageProps} />

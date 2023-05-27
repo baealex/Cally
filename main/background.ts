@@ -26,7 +26,7 @@ if (isProd) {
     try {
         if (process.platform === 'win32' && process.arch === 'x64') {
             versionCheck({
-                feedURL: 'https://raw.githubusercontent.com/baealex/IUCalendar/remake/package.json',
+                feedURL: 'https://raw.githubusercontent.com/baealex/Cally/remake/package.json',
                 openURL: 'https://www.dropbox.com/sh/acxa647t1bazap6/AAAv0A-GPzLyeaotKFCuM7tHa?dl=1'
             });
         }
@@ -34,7 +34,7 @@ if (isProd) {
         console.log('update-check-failure', e);
     }
 
-    const userDataPath = app.getPath('appData') + '/IUCalendarData';
+    const userDataPath = app.getPath('appData') + '/CallyData';
 
     if (!fs.existsSync(userDataPath)) {
         fs.mkdir(userDataPath, (err) => {
