@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/baealex/Cally/">
-        <img src="https://github.com/baealex/Cally/assets/35596687/6550b1a7-f371-4c25-b547-5c514cea85ee">
+        <img width="380px" src="https://github.com/baealex/Cally/assets/35596687/72593f04-9e97-4304-ba07-7bef56015a82">
     </a>
 </p>
 
@@ -16,7 +16,7 @@
 
 **⚠️ Warning** This application under development may be unstable.
 
-To download, please visit https://iuc.vvip.page/
+To download, please visit https://cally.day/
 
 ## Features
 
