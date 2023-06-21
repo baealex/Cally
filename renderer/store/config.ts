@@ -17,11 +17,6 @@ export const configStore = createStore({
     backgroundOpacity: '0'
 });
 
-let saveTimer: NodeJS.Timeout;
-
 configStore.afterStateChange = () => {
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => {
-        ipcRenderer.send('config-save', configStore.state);
-    }, 1000);
+    ipcRenderer.send('config-save', configStore.state);
 };

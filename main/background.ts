@@ -3,16 +3,10 @@ import fs from 'fs';
 import serve from 'electron-serve';
 
 import { createWindow, versionCheck } from './helpers';
+import { configEvent } from './events/config';
+import { noteEvent } from './events/note';
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
-
-function tryJsonParse<T>(str: string): T {
-    try {
-        return JSON.parse(str);
-    } catch (e) {
-        return null;
-    }
-}
 
 if (isProd) {
     serve({ directory: 'app' });
@@ -44,78 +38,13 @@ if (isProd) {
         });
     }
 
-    ipcMain.on('note-load-request', (event, arg) => {
-        const fileName = `${arg.year}${('0' + arg.month).slice(-2)}.json`;
-        const filePath = `${userDataPath}/${fileName}`;
-
-        if (!fs.existsSync(filePath)) {
-            event.sender.send('note-load', {});
-            return;
-        }
-        fs.readFile(filePath, (err, data) => {
-            if (err) {
-                console.log('note-load-request', err);
-                event.sender.send('note-load', {});
-            } else {
-                event.sender.send('note-load', tryJsonParse(data.toString()) || {});
-            }
-        });
-    });
-
-    ipcMain.on('note-save', (_, arg) => {
-        const fileName = `${arg.year}${('0' + arg.month).slice(-2)}.json`;
-        const filePath = `${userDataPath}/${fileName}`;
-
-        fs.writeFile(filePath, JSON.stringify(arg.data), (err) => {
-            if (err) {
-                console.log('note-save', err);
-            }
-        });
-    });
-
-    ipcMain.on('config-load-request', (event) => {
-        const filePath = `${userDataPath}/config.json`;
-
-        if (!fs.existsSync(filePath)) {
-            event.sender.send('config-load', {});
-            return;
-        }
-        fs.readFile(filePath, (err, data) => {
-            if (err) {
-                console.log('config-load-request', err);
-                event.sender.send('config-load', {});
-            } else {
-                event.sender.send('config-load', tryJsonParse(data.toString()) || {});
-            }
-        });
-    });
-
-    ipcMain.on('config-save', (_, arg) => {
-        const filePath = `${userDataPath}/config.json`;
-
-        fs.writeFile(filePath, JSON.stringify(arg), (err) => {
-            if (err) {
-                console.log('config-save', err);
-            }
-        });
-    });
-
-    const configChangeSubscribers: ((arg: any) => void)[] = [];
-
-    ipcMain.on('config-change-subscribe', (event) => {
-        configChangeSubscribers.push(event.sender.send.bind(event.sender, 'config-change-response'));
-    });
-
-    ipcMain.on('config-change', (_, arg) => {
-        configChangeSubscribers.forEach((subscriber) => {
-            subscriber(arg);
-        });
-    });
+    configEvent(userDataPath);
+    noteEvent(userDataPath);
 
     ipcMain.on('open-setting', async () => {
         const settingWindow = createWindow('setting', {
-            width: 500,
-            height: 300,
+            width: 600,
+            height: 500,
             autoHideMenuBar: isProd ? true : false
         });
 
