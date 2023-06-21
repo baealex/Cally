@@ -22,16 +22,11 @@ function Home() {
         bottom,
         year,
         month,
-        image,
-        defaultColor,
-        pointColor,
-        backgroundColor,
-        backgroundOpacity
+        image
     } = state;
 
     const selectedDay = useRef<string>(null);
     const [isOpenedNote, setIsOpenedNote] = React.useState(false);
-    const [isOpenedSetting, setIsOpenedSetting] = React.useState(false);
     const [noteData, setNoteData] = React.useState<{ [key: string]: string }>({});
 
     useEffect(() => {
@@ -45,8 +40,16 @@ function Home() {
             year,
             month
         });
+
         ipcRenderer.on('note-load', (event, arg) => {
             setNoteData(arg);
+        });
+
+        ipcRenderer.send('config-change-subscribe');
+
+        ipcRenderer.on('config-change-response', (event, arg) => {
+            console.log(arg);
+            setState(arg);
         });
     }, []);
 
@@ -99,7 +102,7 @@ function Home() {
                     />
                 )}
             </Movement>
-            <div className="settings" onClick={() => setIsOpenedSetting(true)}>
+            <div className="settings" onClick={() => ipcRenderer.send('open-setting')}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="36"
@@ -150,84 +153,6 @@ function Home() {
                             저장
                         </button>
                     </div>
-                </Modal>
-            )}
-            {isOpenedSetting && (
-                <Modal onClose={() => setIsOpenedSetting(false)}>
-                    <div className="setting-title">
-                        달력 스타일
-                    </div>
-                    <div className="calendar-style">
-                        <div className="calendar-style-item" onClick={() => setState({ style: 'table' })}>
-                            Table
-                        </div>
-                        <div className="calendar-style-item" onClick={() => setState({ style: 'line' })}>
-                            Line
-                        </div>
-                        <div className="calendar-style-item">
-                            To be continued...
-                        </div>
-                    </div>
-                    <div className="setting-title">
-                        달력 위치 고정
-                    </div>
-                    <Toggle
-                        defaultChecked={canMove}
-                        onChange={(canMove) => setState({ canMove })}
-                    />
-                    <div className="setting-title">
-                        달력 기본 색상
-                    </div>
-                    <input
-                        type="color"
-                        value={defaultColor}
-                        onChange={(e) => setState({ defaultColor: e.target.value })}
-                    />
-                    <div className="setting-title">
-                        달력 포인트 색상
-                    </div>
-                    <input
-                        type="color"
-                        value={pointColor}
-                        onChange={(e) => setState({ pointColor: e.target.value })}
-                    />
-                    <div className="setting-title">
-                        달력 배경 색상
-                    </div>
-                    <input
-                        type="color"
-                        value={backgroundColor}
-                        onChange={(e) => setState({ backgroundColor: e.target.value })}
-                    />
-                    <div className="setting-title">
-                        달력 배경 투명도
-                    </div>
-                    <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.1"
-                        value={backgroundOpacity}
-                        onChange={(e) => setState({ backgroundOpacity: e.target.value })}
-                    />
-                    <div className="setting-title">
-                        이미지 변경
-                    </div>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (file) {
-                                const reader = new FileReader();
-                                reader.onload = (e) => {
-                                    console.log(e.target?.result);
-                                    setState({ image: e.target?.result as ArrayBuffer });
-                                };
-                                reader.readAsDataURL(file);
-                            }
-                        }}
-                    />
                 </Modal>
             )}
             <style jsx>{`
@@ -289,43 +214,6 @@ function Home() {
                     justify-content: center;
                     align-items: center;
                     cursor: pointer;
-                }
-
-                .setting-title {
-                    font-size: 14px;
-                    font-weight: bold;
-                    margin-bottom: 10px;
-                }
-
-                .calendar-style {
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
-                    grid-gap: 10px;
-                    margin-bottom: 20px;
-                }
-
-                .calendar-style-item {
-                    width: 100%;
-                    height: 200px;
-                    border-radius: 10px;
-                    background: #ccc;
-                    display: flex;
-                    justify-content: flex-end;
-                    align-items: flex-end;
-                    font-size: 0.8rem;
-                    font-weight: bold;
-                    padding: 8px 16px;
-                    cursor: pointer;
-                }
-
-                .calendar-style-item:nth-child(1) {
-                    background: url('/images/1.jpg') no-repeat center center;
-                    background-size: cover;
-                }
-
-                .calendar-style-item:nth-child(2) {
-                    background: url('/images/2.jpg') no-repeat center center;
-                    background-size: cover;
                 }
             `}</style>
         </>

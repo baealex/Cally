@@ -100,6 +100,34 @@ if (isProd) {
         });
     });
 
+    const configChangeSubscribers: ((arg: any) => void)[] = [];
+
+    ipcMain.on('config-change-subscribe', (event) => {
+        configChangeSubscribers.push(event.sender.send.bind(event.sender, 'config-change-response'));
+    });
+
+    ipcMain.on('config-change', (_, arg) => {
+        configChangeSubscribers.forEach((subscriber) => {
+            subscriber(arg);
+        });
+    });
+
+    ipcMain.on('open-setting', async () => {
+        const settingWindow = createWindow('setting', {
+            width: 500,
+            height: 300,
+            autoHideMenuBar: isProd ? true : false
+        });
+
+        if (isProd) {
+            await settingWindow.loadURL('app://./setting.html');
+        } else {
+            const port = process.argv[2];
+            await settingWindow.loadURL(`http://localhost:${port}/setting`);
+            // mainWindow.webContents.openDevTools();
+        }
+    });
+
     const mainWindow = createWindow('main', {
         width: 1000,
         height: 600,
