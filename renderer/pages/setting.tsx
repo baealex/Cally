@@ -5,7 +5,7 @@ import { Toggle } from '../components/toggle';
 import { configStore } from '../store/config';
 import { useStore } from 'badland-react';
 
-function Home() {
+function Setting() {
     const [isLoaded, setIsLoaded] = React.useState(false);
 
     const [state, handleSetState] = useStore(configStore);
@@ -17,11 +17,14 @@ function Home() {
         backgroundOpacity
     } = state;
 
-    const setState = (state: typeof configStore.state) => {
+    const setState = async (state: Partial<typeof configStore.state>) => {
+        await handleSetState((prevState) => ({
+            ...prevState,
+            ...state
+        }));
         if (isLoaded) {
             ipcRenderer.send('config-change', configStore.state);
         }
-        handleSetState(state);
     };
 
     useEffect(() => {
@@ -106,7 +109,6 @@ function Home() {
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = (e) => {
-                            console.log(e.target?.result);
                             setState({ image: e.target?.result as ArrayBuffer });
                         };
                         reader.readAsDataURL(file);
@@ -155,4 +157,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default Setting;
